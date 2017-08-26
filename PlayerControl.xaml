@@ -1,0 +1,272 @@
+﻿<UserControl
+    x:Class="MtgLifeCounter.PlayerControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MtgLifeCounter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="600"
+    d:DesignWidth="600">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="PlayerColorBrush" Color="Red" />
+        <SolidColorBrush x:Key="BasicColorBrush" Color="White" />
+        
+        <Style x:Key="LifeStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource PlayerColorBrush}" />
+            <Setter Property="FontSize" Value="150" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource PlayerColorBrush}" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="BasicButtonStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource BasicColorBrush}" />
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style x:Key="CmdLife" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White" />          
+        </Style>
+        
+        <Style x:Key="MenuStyle" TargetType="MenuFlyoutPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+    </UserControl.Resources>
+
+
+    <Border BorderBrush="Orange" BorderThickness="1">
+
+        <Grid Name="PlayerContainer" RenderTransformOrigin="0.5,0.5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--<Grid.Background>
+                <LinearGradientBrush  x:Name="BackGroundGradient" StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop x:Name="BackGroundGradientStart" Color="Red" Offset="0.0" />
+                    <GradientStop  x:Name="BackGroundGradientEnd" Color="Maroon" Offset="0.90" />
+                </LinearGradientBrush>
+            </Grid.Background>-->
+
+            <Grid.RenderTransform>
+                <TransformGroup x:Name="RotationGroup">
+                    <RotateTransform x:Name="rtAngle" Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+
+            </Grid.RenderTransform>
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" 
+                    Name="tbPlayerName" 
+                    FontSize="25" 
+                    TextAlignment="Center"
+                    Text="{Binding PlayerName}">
+                     Player
+            </TextBlock>
+
+            <Border Name="BorderLifebutton" Grid.Row="1" Grid.Column="0"  Grid.RowSpan="2" BorderBrush="Orange" BorderThickness="1">
+                <Grid Name="GridLifeButton" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Name="BtnDecreaseLife" 
+                            Grid.Column="0" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            Click="BtnDecreaseLife_Click" 
+                            BorderThickness="0.0"
+                            Foreground="White"
+                            Background="Transparent">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="90*"/>
+                                <RowDefinition Height="10*"/>
+
+                            </Grid.RowDefinitions>
+                            <TextBlock Name="tbDecreaseLife"
+                                Style="{StaticResource LifeStyle}"                                 
+                               >
+                        2
+                            </TextBlock>
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Left" Style="{StaticResource BasicButtonStyle}">
+                                -
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                    <Button Name="BtnIncreaseLife" 
+                        Grid.Column="1" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch" 
+                        Click="BtnIncreaseLife_Click" 
+                        BorderThickness="0.0"
+                        Foreground="White"
+                            Background="Transparent">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="90*"/>
+                                <RowDefinition Height="10*"/>
+
+                            </Grid.RowDefinitions>
+                            <TextBlock Name="tbIncreaseLife"
+                               Grid.Row="0"
+                              Style="{StaticResource LifeStyle}">
+                                0
+                            </TextBlock>
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Right" Style="{StaticResource BasicButtonStyle}">
+                                +
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Border Name="BorderCmd" Grid.Row="2" Grid.Column="0" BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="1" Visibility="Collapsed">
+                <Grid Name="GridCmd" Grid.Row="2" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button   
+                        Name="btnCmdE1"                        
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch" 
+                        Click="btnCmdE1_Click">
+                        <TextBlock Name="cmdE1TB"
+                                   Style="{StaticResource CmdLife}">0</TextBlock>
+                    </Button>
+                    <Button   
+                         Name="btnCmdE2"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        Click="btnCmdE2_Click">
+                        <TextBlock Name="cmdE2TB"
+                                    Style="{StaticResource CmdLife}">0</TextBlock>
+                    </Button>
+
+                    <Button   
+                        Name="btnCmdE3"
+                        Grid.Column="2"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch" 
+                        Click="btnCmdE3_Click">
+                        <TextBlock Name="cmdE3TB"
+                                    Style="{StaticResource CmdLife}">0</TextBlock>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Border BorderBrush="Orange" BorderThickness="1" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+                <Grid Name="GridOptions" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+
+                    </Grid.RowDefinitions>
+
+                    <Button 
+                        Name=" btnCounterType"
+                        Grid.Row="0"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch" 
+                        Click="btnCounterType_Click"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="imgCountertype"  Grid.Row="0" Source="../assets/countersymbols/energy.png"></Image>
+                            <TextBlock Name="tbCounterType" Grid.Row="1" Style="{StaticResource BasicButtonStyle}" DoubleTapped="tbEnergy_DoubleTapped">0</TextBlock>
+
+                        </Grid>
+
+                    </Button>
+                    <Button Name="BtnDecreaseEnergy" 
+                            Grid.Row="2"  
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch"  
+                            BorderThickness="1"
+                            Click="BtnDecreaseEnergy_Click" 
+                             BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                             Background="Transparent">
+                        <TextBlock Style="{StaticResource BasicButtonStyle}">-</TextBlock>
+                    </Button>
+                    <Button Name="BtnIncreaseEnergy" 
+                            Grid.Row="1" 
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch" 
+                            Click="BtnIncreaseEnergy_Click" 
+                            BorderThickness="1"
+                             BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"   
+                             Background="Transparent">
+                        <TextBlock HorizontalAlignment="Center" Style="{StaticResource BasicButtonStyle}">+</TextBlock>
+                    </Button>
+                    <Button 
+                        Name="btnRotate"
+                        Grid.Row="3"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                          BorderThickness="1"
+                         BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                         Background="Transparent">
+                        <Button.Content>
+                            <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                            <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="White" Glyph="&#xE712;"/>                            
+                        </Button.Content>
+                        <Button.Flyout>
+                            <Flyout x:Name="playerOption">
+                                <StackPanel RenderTransformOrigin="0.5,0.5">
+                                    <StackPanel.RenderTransform>
+                                        <RotateTransform x:Name="rtPanelOptions" Angle="0"/>
+                                    </StackPanel.RenderTransform>
+                                    <Button x:Name="BtnFlip" Click="BtnFlip_Click"  HorizontalAlignment="Stretch" >
+                                        Flip
+                                    </Button>
+                                    <StackPanel Orientation="Horizontal" RenderTransformOrigin="0.5,0.5">
+                                        <StackPanel Orientation="Vertical">
+                                            <Button x:Name="btnRed" Background="Red" Click="btnRed_Click">R</Button>
+                                            <Button x:Name="btnGreen" Background="Green" Click="btnGreen_Click">G</Button>
+                                            <Button x:Name="btnBlue" Background="Blue" Click="btnBlue_Click">B</Button>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <Button x:Name="btnPurple" Background="Purple" Click="btnPurple_Click">P</Button>
+                                            <Button x:Name="btnYellow" Background="Yellow" Click="btnYellow_Click">Y</Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <Button x:Name="BtnReset" Click="BtnReset_Click_1" Margin="0,5,0,0"  HorizontalAlignment="Stretch" >
+                                        Reset
+                                    </Button>
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+            </Border>
+
+        </Grid>
+        <!--Main grid-->
+
+    </Border>
+</UserControl>
