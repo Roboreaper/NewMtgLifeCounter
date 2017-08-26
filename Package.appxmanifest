@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="3944f908-3cde-467b-b693-93ec5f75492a" Publisher="CN=Aart" Version="1.0.0.0" />
+  <Identity Name="3944f908-3cde-467b-b693-93ec5f75492a" Publisher="CN=Roboreaper" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="3944f908-3cde-467b-b693-93ec5f75492a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MtgLifeCounter</DisplayName>
@@ -31,7 +31,4 @@
       </uap:VisualElements>
     </Application>
   </Applications>
-  <Capabilities>
-    <Capability Name="internetClient" />
-  </Capabilities>
 </Package>
