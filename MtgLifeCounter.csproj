@@ -101,6 +101,10 @@
     </Compile>
     <Compile Include="Enumerations.cs" />
     <Compile Include="GameManager.cs" />
+    <Compile Include="LifeChangedEvent.cs" />
+    <Compile Include="LifeControl.xaml.cs">
+      <DependentUpon>LifeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -140,6 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LifeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

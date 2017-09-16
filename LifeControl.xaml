@@ -1,0 +1,66 @@
+﻿<UserControl
+    x:Class="MtgLifeCounter.LifeControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MtgLifeCounter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="150"
+    d:DesignWidth="200">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="PlayerColorBrush" Color="Red" />
+        <SolidColorBrush x:Key="BasicColorBrush" Color="White" />
+
+        <Style x:Key="ButtonStyle" TargetType="RepeatButton">
+            <Setter Property="Foreground" Value="{StaticResource PlayerColorBrush}" />            
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Name="GridLifeButton" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Background="Transparent" BorderBrush="Orange" BorderThickness="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Viewbox Grid.Column="0" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Grid.RowSpan="2">
+            
+            <RepeatButton Name="BtnDecreaseLife" 
+                          Style="{StaticResource ButtonStyle}"  
+                          Delay="500" Interval="100"                            
+                          Click="BtnDecreaseLife_Click_1"
+                          Content="2">
+            </RepeatButton>
+        </Viewbox>
+
+
+        <Viewbox Grid.Column="1" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Grid.RowSpan="2" >
+
+            <RepeatButton Name="BtnIncreaseLife" 
+                    Style="{StaticResource ButtonStyle}"     
+                          Delay="500" Interval="100"
+                          Click="BtnIncreaseLife_Click"
+                    Content="0" > 
+            </RepeatButton>              
+             
+        </Viewbox>
+
+        <Viewbox Grid.Row="1" Grid.Column="0">
+            <TextBlock HorizontalAlignment="Left"  
+                       Foreground="White"> - </TextBlock>
+        </Viewbox>
+
+        <Viewbox Grid.Row="1" Grid.Column="2">
+            <TextBlock HorizontalAlignment="Left"  
+                       Foreground="White"> + </TextBlock>
+        </Viewbox>
+
+    </Grid>
+</UserControl>

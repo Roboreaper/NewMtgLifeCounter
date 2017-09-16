@@ -47,24 +47,22 @@ namespace MtgLifeCounter
 
             this._manager = manager;
             this._manager.PlayerColorChanged += _manager_PlayerColorChanged;
-            this.viewModel = model;
+            this.viewModel = model;           
 
-            if (viewModel != null)
-                viewModel.PropertyChanged -= ViewModel_PropertyChanged;
-
-            viewModel.PropertyChanged += ViewModel_PropertyChanged;
-
-            UpdateLifeTotal();
-            UpdateName();
+            LifeControl.Init(true,viewModel.LifeTotal);
             UpdateEnergy();
-            UpdateCommanderDmg();
+
+            cmdLife1.Init(false, viewModel.CmdEnemy1);
+            cmdLife2.Init(false, viewModel.CmdEnemy2);
+            cmdLife3.Init(false, viewModel.CmdEnemy3);
+
 
             rtAngle.Angle = 0;
             rtPanelOptions.Angle = 0;
 
-            btnCmdE1.Visibility = Visibility.Collapsed;
-            btnCmdE2.Visibility = Visibility.Collapsed;
-            btnCmdE3.Visibility = Visibility.Collapsed;
+            cmdLife1.Visibility = Visibility.Collapsed;
+            cmdLife2.Visibility = Visibility.Collapsed;
+            cmdLife3.Visibility = Visibility.Collapsed;
 
 
             var cmd = 1;
@@ -80,24 +78,40 @@ namespace MtgLifeCounter
                 switch (cmd)
                 {
                     case 1:
-                        btnCmdE1.Visibility = Visibility.Visible;
+                        cmdLife1.Visibility = Visibility.Visible;
                         break;
 
                     case 2:
-                        btnCmdE2.Visibility = Visibility.Visible;
+                        cmdLife2.Visibility = Visibility.Visible;
                         break;
 
                     case 3:
-                        btnCmdE3.Visibility = Visibility.Visible;
+                        cmdLife3.Visibility = Visibility.Visible;
                         break;
 
                     default:
                         break;
                 }
                 cmd++;
-            }
+            }            
+
+            cmdLife1.LifeChanged += CmdLife_LifeChanged;
+            cmdLife2.LifeChanged += CmdLife_LifeChanged;
+            cmdLife3.LifeChanged += CmdLife_LifeChanged;
 
             this.DataContext = viewModel;
+        }
+
+        private async void CmdLife_LifeChanged(object sender, LifeChangedEventArgs e)
+        {
+            if(!Dispatcher.HasThreadAccess)
+            {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { CmdLife_LifeChanged(sender, e); });
+            }
+            else
+            {               
+                await LifeControl.UpdateLifeTotalAsync(e.Lifechanged*-1);
+            }
         }
 
         private void _manager_PlayerColorChanged(object sender, ColorChangedEvent e)
@@ -109,16 +123,6 @@ namespace MtgLifeCounter
 
         }
 
-
-
-        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "PlayerName")
-            {
-                UpdateName();
-            }
-        }
-
         public void Flip(int degrees = 180)
         {
             ApplyRotation(degrees);
@@ -127,51 +131,7 @@ namespace MtgLifeCounter
         public void SetBackGround(BackGroundColors color)
         {
             viewModel.Color = color;
-            object objectStyle = null;
-            SolidColorBrush pc = null;
-            if (this.Resources.TryGetValue("PlayerColorBrush", out objectStyle))
-            {
-                pc = objectStyle as SolidColorBrush;
-            }
-
-            if (pc == null)
-                return;
-
-            switch (viewModel.Color)
-            {
-                case BackGroundColors.Red:
-                    pc.Color = Colors.Red;
-
-                    //BackGroundGradientStart.Color = Colors.Red;
-                    //BackGroundGradientEnd.Color = Colors.Maroon;
-                    break;
-                case BackGroundColors.Blue:
-                    pc.Color = Colors.Blue;
-
-                    //BackGroundGradientStart.Color = Colors.Blue;
-                    //BackGroundGradientEnd.Color = Colors.DarkBlue;
-                    break;
-                case BackGroundColors.Green:
-                    pc.Color = Colors.ForestGreen;
-
-                    //BackGroundGradientStart.Color = Colors.ForestGreen;
-                    //BackGroundGradientEnd.Color = Colors.DarkGreen;
-                    break;
-                case BackGroundColors.Purple:
-                    pc.Color = Colors.MediumPurple;
-
-                    //BackGroundGradientStart.Color = Colors.MediumPurple;
-                    //BackGroundGradientEnd.Color = Colors.Purple;
-                    break;
-                case BackGroundColors.Yellow:
-                    pc.Color = Colors.Goldenrod;
-
-                    //BackGroundGradientStart.Color = Colors.Goldenrod;
-                    //BackGroundGradientEnd.Color = Colors.DarkGoldenrod;
-                    break;
-                default:
-                    break;
-            }
+            LifeControl.SetColor(viewModel.Color);           
         }
 
         Gametypes _lastType = Gametypes.MultiPlayer;
@@ -188,128 +148,124 @@ namespace MtgLifeCounter
             viewModel.CmdEnemy3 = 0;
 
             if (type == Gametypes.Commander)
-                BorderLifebutton.SetValue(Grid.RowSpanProperty, 1);
+                LifeControl.SetValue(Grid.RowSpanProperty, 1);
             else if (type == Gametypes.MultiPlayer)
-                BorderLifebutton.SetValue(Grid.RowSpanProperty, 2);
+                LifeControl.SetValue(Grid.RowSpanProperty, 2);
+
 
             BorderCmd.Visibility = type == Gametypes.Commander ? Visibility.Visible : Visibility.Collapsed;
 
-            UpdateLifeTotal();
+            LifeControl.SetLife(viewModel.LifeTotal);
             UpdateEnergy();
             UpdateCommanderDmg();
-        }
+        }        
 
-        private void UpdateName()
-        {
-            tbPlayerName.Text = viewModel.PlayerName;
-        }
+        //private async void BtnDecreaseLife_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //viewModel.LifeTotal--;
+        //    await UpdateLifeTotalAsync(-1);
+        //}
 
-        private async void BtnDecreaseLife_Click(object sender, RoutedEventArgs e)
-        {
-            //viewModel.LifeTotal--;
-            await UpdateLifeTotalAsync(-1);
-        }
+        //private async void BtnIncreaseLife_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //viewModel.LifeTotal++;
+        //    await UpdateLifeTotalAsync(1);
+        //}
 
-        private async void BtnIncreaseLife_Click(object sender, RoutedEventArgs e)
-        {
-            //viewModel.LifeTotal++;
-            await UpdateLifeTotalAsync(1);
-        }
+        //public void UpdateLifeTotal()
+        //{
+        //    string lifeTotalString = viewModel.LifeTotal.ToString();
+        //    string leftTxt = "";
+        //    string rightTxt = "";
+        //    if (viewModel.LifeTotal < 0)
+        //    {
+        //        leftTxt = "-";
 
-        public void UpdateLifeTotal()
-        {
-            string lifeTotalString = viewModel.LifeTotal.ToString();
-            string leftTxt = "";
-            string rightTxt = "";
-            if (viewModel.LifeTotal < 0)
-            {
-                leftTxt = "-";
+        //        if (lifeTotalString.Length > 2)
+        //        {
+        //            leftTxt += lifeTotalString[1];
+        //            rightTxt = lifeTotalString.Substring(2);
+        //        }
+        //        else
+        //        {
+        //            rightTxt = lifeTotalString.Substring(1);
+        //        }
 
-                if (lifeTotalString.Length > 2)
-                {
-                    leftTxt += lifeTotalString[1];
-                    rightTxt = lifeTotalString.Substring(2);
-                }
-                else
-                {
-                    rightTxt = lifeTotalString.Substring(1);
-                }
+        //    }
+        //    else
+        //    {
+        //        if (viewModel.LifeTotal <= 9)
+        //        {
+        //            leftTxt = "0";
+        //            rightTxt = lifeTotalString;
+        //        }
+        //        else
+        //        {
+        //            leftTxt += lifeTotalString[0];
+        //            rightTxt = lifeTotalString.Substring(1);
+        //        }
+        //    }
 
-            }
-            else
-            {
-                if (viewModel.LifeTotal <= 9)
-                {
-                    leftTxt = "0";
-                    rightTxt = lifeTotalString;
-                }
-                else
-                {
-                    leftTxt += lifeTotalString[0];
-                    rightTxt = lifeTotalString.Substring(1);
-                }
-            }
+        //    tbDecreaseLife.Text = leftTxt;
+        //    tbIncreaseLife.Text = rightTxt;
+        //}
 
-            tbDecreaseLife.Text = leftTxt;
-            tbIncreaseLife.Text = rightTxt;
-        }
+        //public async Task UpdateLifeTotalAsync(int i)
+        //{
+        //    await Task.Run(() =>
+        //    {
+        //        viewModel.LifeTotal += i;
+        //        string lifeTotalString = viewModel.LifeTotal.ToString();
+        //        string leftTxt = "";
+        //        string rightTxt = "";
+        //        if (viewModel.LifeTotal < 0)
+        //        {
+        //            leftTxt = "-";
 
-        public async Task UpdateLifeTotalAsync(int i)
-        {
-            await Task.Run(() =>
-            {
-                viewModel.LifeTotal += i;
-                string lifeTotalString = viewModel.LifeTotal.ToString();
-                string leftTxt = "";
-                string rightTxt = "";
-                if (viewModel.LifeTotal < 0)
-                {
-                    leftTxt = "-";
+        //            if (lifeTotalString.Length > 2)
+        //            {
+        //                leftTxt += lifeTotalString[1];
+        //                rightTxt = lifeTotalString.Substring(2);
+        //            }
+        //            else
+        //            {
+        //                rightTxt = lifeTotalString.Substring(1);
+        //            }
 
-                    if (lifeTotalString.Length > 2)
-                    {
-                        leftTxt += lifeTotalString[1];
-                        rightTxt = lifeTotalString.Substring(2);
-                    }
-                    else
-                    {
-                        rightTxt = lifeTotalString.Substring(1);
-                    }
+        //        }
+        //        else
+        //        {
+        //            if (viewModel.LifeTotal <= 9)
+        //            {
+        //                leftTxt = "0";
+        //                rightTxt = lifeTotalString;
+        //            }
+        //            else
+        //            {
+        //                leftTxt += lifeTotalString[0];
+        //                rightTxt = lifeTotalString.Substring(1);
+        //            }
+        //        }
 
-                }
-                else
-                {
-                    if (viewModel.LifeTotal <= 9)
-                    {
-                        leftTxt = "0";
-                        rightTxt = lifeTotalString;
-                    }
-                    else
-                    {
-                        leftTxt += lifeTotalString[0];
-                        rightTxt = lifeTotalString.Substring(1);
-                    }
-                }
+        //        //tbDecreaseLife.Text = leftTxt;
+        //        //tbIncreaseLife.Text = rightTxt;
+        //        UpdateLifeTextBox(leftTxt, rightTxt);
+        //    });
+        //}
 
-                //tbDecreaseLife.Text = leftTxt;
-                //tbIncreaseLife.Text = rightTxt;
-                UpdateLifeTextBox(leftTxt, rightTxt);
-            });
-        }
+        //private async void UpdateLifeTextBox(string left, string right)
+        //{
 
-        private async void UpdateLifeTextBox(string left, string right)
-        {
+        //    if (!tbDecreaseLife.Dispatcher.HasThreadAccess)
+        //    {
+        //        await tbDecreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { tbDecreaseLife.Text = left; });
+        //    }
 
-            if (!tbDecreaseLife.Dispatcher.HasThreadAccess)
-            {
-                await tbDecreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { tbDecreaseLife.Text = left; });
-            }
-
-            if (!tbIncreaseLife.Dispatcher.HasThreadAccess)
-            {
-                await tbIncreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { tbIncreaseLife.Text = right; });
-            }
-        }
+        //    if (!tbIncreaseLife.Dispatcher.HasThreadAccess)
+        //    {
+        //        await tbIncreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { tbIncreaseLife.Text = right; });
+        //    }
+        //}
 
         private void BtnIncreaseEnergy_Click(object sender, RoutedEventArgs e)
         {
@@ -398,17 +354,7 @@ namespace MtgLifeCounter
             UpdateEnergy();
 
             imgCountertype.Source = new BitmapImage(new Uri("ms-appx:///" + CounterTypeHelper.CounterTypeImage(viewModel.CurrentType)));
-        }
-
-        private async void BtnDecreaseLife_Holding(object sender, HoldingRoutedEventArgs e)
-        {
-            await UpdateLifeTotalAsync(-5);
-        }
-
-        private async void BtnIncreaseLife_Holding(object sender, HoldingRoutedEventArgs e)
-        {
-            await UpdateLifeTotalAsync(5);
-        }
+        }      
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
@@ -416,67 +362,61 @@ namespace MtgLifeCounter
         }
 
 
-        private async void btnCmdE1_Click(object sender, RoutedEventArgs e)
-        {
-            await Task.Run(async () =>
-            {
-                this.viewModel.CmdEnemy1++;
-                //viewModel.LifeTotal--;
-                await UpdateLifeTotalAsync(-1);
-                UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1.ToString(), this.viewModel.CmdEnemy2.ToString(), this.viewModel.CmdEnemy3.ToString());
-            });
-        }
+        //private async void btnCmdE1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    await Task.Run(async () =>
+        //    {
+        //        this.viewModel.CmdEnemy1++;
+        //        //viewModel.LifeTotal--;
+        //        await LifeControl.UpdateLifeTotalAsync(-1);
+        //        UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1, this.viewModel.CmdEnemy2, this.viewModel.CmdEnemy3);
+        //    });
+        //}
 
-        private async void btnCmdE2_Click(object sender, RoutedEventArgs e)
-        {
-            await Task.Run(async () =>
-            {
-                this.viewModel.CmdEnemy2++;
-                //viewModel.LifeTotal--;
-                await UpdateLifeTotalAsync(-1);
-                UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1.ToString(), this.viewModel.CmdEnemy2.ToString(), this.viewModel.CmdEnemy3.ToString());
-            });
-        }
+        //private async void btnCmdE2_Click(object sender, RoutedEventArgs e)
+        //{
+        //    await Task.Run(async () =>
+        //    {
+        //        this.viewModel.CmdEnemy2++;
+        //        //viewModel.LifeTotal--;
+        //        await LifeControl.UpdateLifeTotalAsync(-1);
+        //        UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1, this.viewModel.CmdEnemy2, this.viewModel.CmdEnemy3);
+        //    });
+        //}
 
-        private async void btnCmdE3_Click(object sender, RoutedEventArgs e)
-        {
-            await Task.Run(async () =>
-            {
-                this.viewModel.CmdEnemy3++;
-                //viewModel.LifeTotal--;
-                await UpdateLifeTotalAsync(-1);
-                UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1.ToString(), this.viewModel.CmdEnemy2.ToString(), this.viewModel.CmdEnemy3.ToString());
-            });
+        //private async void btnCmdE3_Click(object sender, RoutedEventArgs e)
+        //{
+        //    await Task.Run(async () =>
+        //    {
+        //        this.viewModel.CmdEnemy3++;
+        //        //viewModel.LifeTotal--;
+        //        await LifeControl.UpdateLifeTotalAsync(-1);
+        //        //UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1.ToString(), this.viewModel.CmdEnemy2.ToString(), this.viewModel.CmdEnemy3.ToString());
+        //        UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1, this.viewModel.CmdEnemy2, this.viewModel.CmdEnemy3);
+        //    });
 
-        }
+        //}
 
         private void UpdateCommanderDmg()
         {
-            cmdE1TB.Text = this.viewModel.CmdEnemy1.ToString();
-            cmdE2TB.Text = this.viewModel.CmdEnemy2.ToString();
-            cmdE3TB.Text = this.viewModel.CmdEnemy3.ToString();
+            cmdLife1.SetLife(viewModel.CmdEnemy1);
+            cmdLife2.SetLife(viewModel.CmdEnemy2);
+            cmdLife3.SetLife(viewModel.CmdEnemy3);
+
+            //cmdE1TB.Text = this.viewModel.CmdEnemy1.ToString();
+            //cmdE2TB.Text = this.viewModel.CmdEnemy2.ToString();
+            //cmdE3TB.Text = this.viewModel.CmdEnemy3.ToString();
         }
 
-        private async void UpdateCommanderDmgAsync(string cmd1, string cmd2, string cmd3)
+        private async void UpdateCommanderDmgAsync(int cmd1, int cmd2, int cmd3)
         {
             //cmdE1TB.Text = this.viewModel.CmdEnemy1.ToString();
             //cmdE2TB.Text = this.viewModel.CmdEnemy2.ToString();
             //cmdE3TB.Text = this.viewModel.CmdEnemy3.ToString();
 
-            if (!cmdE1TB.Dispatcher.HasThreadAccess)
-            {
-                await cmdE1TB.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { cmdE1TB.Text = cmd1; });
-            }
-
-            if (!cmdE2TB.Dispatcher.HasThreadAccess)
-            {
-                await cmdE2TB.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { cmdE2TB.Text = cmd2; });
-            }
-
-            if (!cmdE3TB.Dispatcher.HasThreadAccess)
-            {
-                await cmdE3TB.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { cmdE3TB.Text = cmd3; });
-            }
+            await cmdLife1.SetLifeAsync(viewModel.CmdEnemy1);
+            await cmdLife2.SetLifeAsync(viewModel.CmdEnemy2);
+            await cmdLife3.SetLifeAsync(viewModel.CmdEnemy3);
         }
 
         private void BtnReset_Click_1(object sender, RoutedEventArgs e)
@@ -527,39 +467,44 @@ namespace MtgLifeCounter
         {
             int btn = CommanderButtonMapping[iD];
 
-            Color clr = Colors.Red;
+            //Color clr = Colors.Red;
 
-            switch (color)
-            {
-                case BackGroundColors.Red:
-                    clr = Colors.Red;
-                    break;
-                case BackGroundColors.Blue:
-                    clr = Colors.Blue;
-                    break;
-                case BackGroundColors.Green:
-                    clr = Colors.ForestGreen;
-                    break;
-                case BackGroundColors.Purple:
-                    clr = Colors.MediumPurple;
-                    break;
-                case BackGroundColors.Yellow:
-                    clr = Colors.Goldenrod;
-                    break;
-            }
+            //switch (color)
+            //{
+            //    case BackGroundColors.Red:
+            //        clr = Colors.Red;
+            //        break;
+            //    case BackGroundColors.Blue:
+            //        clr = Colors.Blue;
+            //        break;
+            //    case BackGroundColors.Green:
+            //        clr = Colors.ForestGreen;
+            //        break;
+            //    case BackGroundColors.Purple:
+            //        clr = Colors.MediumPurple;
+            //        break;
+            //    case BackGroundColors.Yellow:
+            //        clr = Colors.Goldenrod;
+            //        break;
+            //}
 
             //clr.A = 127;
 
             switch (btn)
             {
                 case 1:
-                    btnCmdE1.Background = new SolidColorBrush(clr);
+                    //btnCmdE1.Background = new SolidColorBrush(clr);
+                    cmdLife1.SetColor(color);
                     break;
                 case 2:
-                    btnCmdE2.Background = new SolidColorBrush(clr);
+                    //btnCmdE2.Background = new SolidColorBrush(clr);
+                    cmdLife2.SetColor(color);
+
                     break;
                 case 3:
-                    btnCmdE3.Background = new SolidColorBrush(clr);
+                    //btnCmdE3.Background = new SolidColorBrush(clr);
+                    cmdLife3.SetColor(color);
+
                     break;
                 default:
                     break;

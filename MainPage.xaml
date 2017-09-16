@@ -73,7 +73,7 @@
         <local:PlayerControl x:Name="Player1" Grid.Row="1" Grid.Column="1"   />
         <local:PlayerControl x:Name="Player2" Grid.Row="1" Grid.Column="3"  />
         <local:PlayerControl x:Name="Player3" Grid.Row="3" Grid.Column="1" />
-        <local:PlayerControl x:Name="Player4" Grid.Row="3" Grid.Column="3" />
+        <local:PlayerControl x:Name="Player4" Grid.Row="3" Grid.Column="3"/>
 
         <!--<Button Name="cmdOpen"
                 Click="cmdOpen_Click"

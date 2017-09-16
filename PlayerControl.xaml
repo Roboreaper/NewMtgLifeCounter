@@ -46,9 +46,8 @@
     <Border BorderBrush="Orange" BorderThickness="1">
 
         <Grid Name="PlayerContainer" RenderTransformOrigin="0.5,0.5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="7*"/>
+            <Grid.RowDefinitions>                
+                <RowDefinition Height="8*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -69,74 +68,11 @@
                     <TranslateTransform/>
                 </TransformGroup>
 
-            </Grid.RenderTransform>
-            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" 
-                    Name="tbPlayerName" 
-                    FontSize="25" 
-                    TextAlignment="Center"
-                    Text="{Binding PlayerName}">
-                     Player
-            </TextBlock>
+            </Grid.RenderTransform>          
 
-            <Border Name="BorderLifebutton" Grid.Row="1" Grid.Column="0"  Grid.RowSpan="2" BorderBrush="Orange" BorderThickness="1">
-                <Grid Name="GridLifeButton" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Background="Transparent">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
+            <local:LifeControl x:Name="LifeControl"  Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2"/>
 
-                    <Button Name="BtnDecreaseLife" 
-                            Grid.Column="0" 
-                            HorizontalAlignment="Stretch" 
-                            VerticalAlignment="Stretch" 
-                            Click="BtnDecreaseLife_Click" 
-                            BorderThickness="0.0"
-                            Foreground="White"
-                            Background="Transparent">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="90*"/>
-                                <RowDefinition Height="10*"/>
-
-                            </Grid.RowDefinitions>
-                            <TextBlock Name="tbDecreaseLife"
-                                Style="{StaticResource LifeStyle}"                                 
-                               >
-                        2
-                            </TextBlock>
-                            <TextBlock Grid.Row="1" HorizontalAlignment="Left" Style="{StaticResource BasicButtonStyle}">
-                                -
-                            </TextBlock>
-                        </Grid>
-                    </Button>
-                    <Button Name="BtnIncreaseLife" 
-                        Grid.Column="1" 
-                        HorizontalAlignment="Stretch" 
-                        VerticalAlignment="Stretch" 
-                        Click="BtnIncreaseLife_Click" 
-                        BorderThickness="0.0"
-                        Foreground="White"
-                            Background="Transparent">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="90*"/>
-                                <RowDefinition Height="10*"/>
-
-                            </Grid.RowDefinitions>
-                            <TextBlock Name="tbIncreaseLife"
-                               Grid.Row="0"
-                              Style="{StaticResource LifeStyle}">
-                                0
-                            </TextBlock>
-                            <TextBlock Grid.Row="1" HorizontalAlignment="Right" Style="{StaticResource BasicButtonStyle}">
-                                +
-                            </TextBlock>
-                        </Grid>
-                    </Button>
-                </Grid>
-            </Border>
-
-            <Border Name="BorderCmd" Grid.Row="2" Grid.Column="0" BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="1" Visibility="Collapsed">
+            <Border Name="BorderCmd" Grid.Row="1" Grid.Column="0" BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="1" Visibility="Collapsed">
                 <Grid Name="GridCmd" Grid.Row="2" Grid.Column="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -144,7 +80,12 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button   
+                    <local:LifeControl x:Name="cmdLife1"  Grid.Row="0" Grid.Column="0"/>
+
+                    <local:LifeControl x:Name="cmdLife2"  Grid.Row="0" Grid.Column="1"/>
+
+                    <local:LifeControl x:Name="cmdLife3"  Grid.Row="0" Grid.Column="2" />
+                    <!--<Button   
                         Name="btnCmdE1"                        
                         Grid.Column="0"
                         HorizontalAlignment="Stretch" 
@@ -171,11 +112,11 @@
                         Click="btnCmdE3_Click">
                         <TextBlock Name="cmdE3TB"
                                     Style="{StaticResource CmdLife}">0</TextBlock>
-                    </Button>
+                    </Button>-->
                 </Grid>
             </Border>
 
-            <Border BorderBrush="Orange" BorderThickness="1" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+            <Border BorderBrush="Orange" BorderThickness="1" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
                 <Grid Name="GridOptions" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
