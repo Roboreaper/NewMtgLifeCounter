@@ -19,7 +19,8 @@ namespace MtgLifeCounter
         Blue,
         Green,
         Purple,
-        Yellow
+        Yellow,
+        White,
     }
 
     public enum Gametypes

@@ -57,13 +57,14 @@ namespace MtgLifeCounter
             cmdLife3.Init(false, viewModel.CmdEnemy3);
 
 
-            rtAngle.Angle = 0;
-            rtPanelOptions.Angle = 0;
+            ToprtAngle.Angle = 0;
+            //rtPanelOptions.Angle = 0;
 
             cmdLife1.Visibility = Visibility.Collapsed;
             cmdLife2.Visibility = Visibility.Collapsed;
             cmdLife3.Visibility = Visibility.Collapsed;
 
+            SettingsControl.Init(this.viewModel, this, OnClose);
 
             var cmd = 1;
             foreach (var id in _manager.ActivePlayers())
@@ -101,6 +102,8 @@ namespace MtgLifeCounter
 
             this.DataContext = viewModel;
         }
+
+       
 
         private async void CmdLife_LifeChanged(object sender, LifeChangedEventArgs e)
         {
@@ -432,10 +435,11 @@ namespace MtgLifeCounter
         private void ApplyRotation(int degrees = 180)
         {
             Rotation = (Rotation + degrees) % 360;
-            rtAngle.Angle = Rotation;
-            rtPanelOptions.Angle = Rotation;
+            //rtAngle.Angle = Rotation;
+            ToprtAngle.Angle = Rotation;
+            //rtPanelOptions.Angle = Rotation;
 
-            playerOption.Hide();
+            //playerOption.Hide();
         }
 
         private void btnRed_Click(object sender, RoutedEventArgs e)
@@ -509,6 +513,25 @@ namespace MtgLifeCounter
                 default:
                     break;
             }
+        }
+
+        private void btnRotate_Click(object sender, RoutedEventArgs e)
+        {
+            PlayerContainer.Visibility = Visibility.Collapsed;
+            SettingsControl.Visibility = Visibility.Visible;
+            SettingsControl.Update();
+
+        }
+
+        private void OnClose()
+        {
+            PlayerContainer.Visibility = Visibility.Visible;
+            SettingsControl.Visibility = Visibility.Collapsed;
+
+            LifeControl.SetLife(viewModel.LifeTotal);
+            UpdateEnergy();
+            UpdateCommanderDmg();
+
         }
     }
 }

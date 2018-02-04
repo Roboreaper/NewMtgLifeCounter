@@ -1,0 +1,193 @@
+﻿<UserControl
+    x:Class="MtgLifeCounter.SettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MtgLifeCounter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="22*"/>
+            <ColumnDefinition Width="22*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="22*"/>
+            <ColumnDefinition Width="22*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <Grid.RenderTransform>
+            <TransformGroup x:Name="RotationGroup">
+                <RotateTransform x:Name="rtAngle" Angle="0"/>
+                <TranslateTransform/>
+            </TransformGroup>
+
+        </Grid.RenderTransform>
+
+        <ToggleButton
+                    Name="btnRed"
+                        Grid.Row="0"
+                        Grid.Column="0"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnRed_Click">
+            <ToggleButton.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="Red" Glyph="&#xEC14;"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton
+                    Name="btnGreen"
+                        Grid.Row="0"
+                        Grid.Column="1"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnGreen_Click" >
+            <ToggleButton.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="Green" Glyph="&#xEC14;"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton
+                    Name="BtnBlue"
+                        Grid.Row="1"
+                        Grid.Column="1"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="BtnBlue_Click">
+            <ToggleButton.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="Blue" Glyph="&#xEC14;"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton
+                    Name="btnYellow"
+                        Grid.Row="1"
+                        Grid.Column="0"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnYellow_Click" >
+
+
+            <ToggleButton.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="Yellow" Glyph="&#xEC14;"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton
+                    Name="btnPurple"
+                        Grid.Row="2"
+                        Grid.Column="0"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnPurple_Click" >
+            <ToggleButton.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="Violet" Glyph="&#xEC14;"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton 
+                    Name="btnWhite"
+                        Grid.Row="2"
+                        Grid.Column="1"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnWhite_Click" >
+            <ToggleButton.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="White" Glyph="&#xEC14;"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <Button
+                    Name="btnRotate"
+                        Grid.Row="0"
+                        Grid.Column="4"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnRotate_Click">
+            <Button.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="White" Glyph="&#xE7AD;"/>
+            </Button.Content>
+        </Button>
+
+        <Button
+                    Name="btnSet20"
+                        Grid.Row="2"
+                        Grid.Column="3"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnSet20_Click">
+            <Button.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="&#xEB51;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="20" VerticalAlignment="Center" Foreground="White"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <Button
+                    Name="btnSet40"
+                        Grid.Row="2"
+                        Grid.Column="4"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnSet40_Click">
+            <Button.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="&#xEB51;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="40" VerticalAlignment="Center" Foreground="White"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <Button
+                    Name="btnBack"
+                        Grid.Row="3"
+                        Grid.Column="4"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnBack_Click">
+            <Button.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="White" Glyph="&#xE73E;"/>
+            </Button.Content>
+        </Button>
+
+    </Grid>
+
+</UserControl>

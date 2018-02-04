@@ -45,7 +45,21 @@
 
     <Border BorderBrush="Orange" BorderThickness="1">
 
-        <Grid Name="PlayerContainer" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="TopPlayerContainer" RenderTransformOrigin="0.5,0.5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" x:Name="rowLife"/>                
+            </Grid.RowDefinitions>
+
+
+            <Grid.RenderTransform>
+                <TransformGroup x:Name="TopRotationGroup">
+                    <RotateTransform x:Name="ToprtAngle" Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+
+            </Grid.RenderTransform>
+            
+            <Grid Name="PlayerContainer"  Visibility="Visible">
             <Grid.RowDefinitions>                
                 <RowDefinition Height="8*"/>
                 <RowDefinition Height="2*"/>
@@ -171,12 +185,12 @@
                         VerticalAlignment="Stretch"   
                           BorderThickness="1"
                          BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                         Background="Transparent">
+                         Background="Transparent" Click="btnRotate_Click">
                         <Button.Content>
                             <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
                             <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="White" Glyph="&#xE712;"/>                            
                         </Button.Content>
-                        <Button.Flyout>
+                        <!--<Button.Flyout>
                             <Flyout x:Name="playerOption">
                                 <StackPanel RenderTransformOrigin="0.5,0.5">
                                     <StackPanel.RenderTransform>
@@ -201,7 +215,7 @@
                                     </Button>
                                 </StackPanel>
                             </Flyout>
-                        </Button.Flyout>
+                        </Button.Flyout>-->
                     </Button>
                 </Grid>
             </Border>
@@ -209,5 +223,7 @@
         </Grid>
         <!--Main grid-->
 
+        <local:SettingsControl x:Name="SettingsControl"  Visibility="Collapsed"/>
+        </Grid>
     </Border>
 </UserControl>

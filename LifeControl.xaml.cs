@@ -109,6 +109,9 @@ namespace MtgLifeCounter
                     //BackGroundGradientStart.Color = Colors.Goldenrod;
                     //BackGroundGradientEnd.Color = Colors.DarkGoldenrod;
                     break;
+                case BackGroundColors.White:
+                    pc.Color = Colors.White;
+                    break;
                 default:
                     break;
             }
