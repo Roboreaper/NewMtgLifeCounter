@@ -106,7 +106,7 @@
                         Background="Transparent" Click="btnPurple_Click" >
             <ToggleButton.Content>
                 <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
-                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="Violet" Glyph="&#xEC14;"/>
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="MediumPurple" Glyph="&#xEC14;"/>
             </ToggleButton.Content>
         </ToggleButton>
         <ToggleButton 
@@ -123,7 +123,34 @@
                 <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="White" Glyph="&#xEC14;"/>
             </ToggleButton.Content>
         </ToggleButton>
-
+        <ToggleButton 
+                    Name="btnPink"
+                        Grid.Row="3"
+                        Grid.Column="0"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnOrange_Checked" >
+            <ToggleButton.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="Pink" Glyph="&#xEC14;"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton 
+                    Name="btnCyan"
+                        Grid.Row="3"
+                        Grid.Column="1"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnCyan_Checked" >
+            <ToggleButton.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="Cyan" Glyph="&#xEC14;"/>
+            </ToggleButton.Content>
+        </ToggleButton>
         <Button
                     Name="btnRotate"
                         Grid.Row="0"

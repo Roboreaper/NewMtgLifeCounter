@@ -43,6 +43,8 @@ namespace MtgLifeCounter
             BtnBlue.IsChecked = false;
             btnYellow.IsChecked = false;
             btnWhite.IsChecked = false;
+            btnPink.IsChecked = false;
+            btnCyan.IsChecked = false;
 
             switch (viewModel.Color)
             {
@@ -63,6 +65,12 @@ namespace MtgLifeCounter
                     break;
                 case BackGroundColors.White:
                     btnWhite.IsChecked = true;
+                    break;
+                case BackGroundColors.Pink:
+                    btnPink.IsChecked = true;
+                    break;
+                case BackGroundColors.Cyan:
+                    btnCyan.IsChecked = true;
                     break;
                 default:
                     break;
@@ -113,6 +121,19 @@ namespace MtgLifeCounter
             Update();
         }
 
+
+        private void btnOrange_Checked(object sender, RoutedEventArgs e)
+        {
+            playerControl.SetBackGround(BackGroundColors.Pink);
+            Update();
+
+        }
+
+        private void btnCyan_Checked(object sender, RoutedEventArgs e)
+        {
+            playerControl.SetBackGround(BackGroundColors.Cyan);
+            Update();
+        }
         private void btnSet20_Click(object sender, RoutedEventArgs e)
         {
             viewModel.LifeTotal = 20;
@@ -127,5 +148,6 @@ namespace MtgLifeCounter
         {
             playerControl.Flip();
         }
+
     }
 }

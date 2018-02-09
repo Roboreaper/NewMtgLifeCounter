@@ -112,6 +112,12 @@ namespace MtgLifeCounter
                 case BackGroundColors.White:
                     pc.Color = Colors.White;
                     break;
+                case BackGroundColors.Pink:
+                    pc.Color = Colors.Pink;
+                    break;
+                case BackGroundColors.Cyan:
+                    pc.Color = Colors.Cyan;
+                    break;
                 default:
                     break;
             }
