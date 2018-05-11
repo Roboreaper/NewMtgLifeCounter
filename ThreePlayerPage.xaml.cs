@@ -22,26 +22,23 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MtgLifeCounter
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class ThreePlayerPage : Page
     {
         GameManager _manager = new GameManager();
 
-        public MainPage()
+        public ThreePlayerPage()
         {
             this.InitializeComponent();         
 
             Player1.Init(_manager, _manager.Player1);
             Player2.Init(_manager, _manager.Player2);
             Player3.Init(_manager, _manager.Player3);
-            Player4.Init(_manager, _manager.Player4);
 
-            Player1.Flip();
-            Player2.Flip();
-
+            Player1.Flip(180);
+            
             Player1.SetBackGround(BackGroundColors.Yellow);
             Player2.SetBackGround(BackGroundColors.Green);
             Player3.SetBackGround(BackGroundColors.Purple);
-            Player4.SetBackGround(BackGroundColors.Blue);
 
         }
 
@@ -57,7 +54,6 @@ namespace MtgLifeCounter
             Player1.Reset();
             Player2.Reset();
             Player3.Reset();
-            Player4.Reset();
         }
 
         private void BtnResetCommander_Click(object sender, RoutedEventArgs e)
@@ -65,14 +61,13 @@ namespace MtgLifeCounter
             Player1.Reset(Gametypes.Commander);
             Player2.Reset(Gametypes.Commander);
             Player3.Reset(Gametypes.Commander);
-            Player4.Reset(Gametypes.Commander);
         }
 
         private async void BtnReset3P_Click(object sender, RoutedEventArgs e)
         {
 
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                          () => Frame.Navigate(typeof(ThreePlayerPage)));
+                          () => Frame.Navigate(typeof(MainPage)));
 
         }
 

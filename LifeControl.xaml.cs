@@ -21,8 +21,14 @@ namespace MtgLifeCounter
 {
     public sealed partial class LifeControl : UserControl
     {
-        private int LifeTotal = 20;
+        private PlayerViewModel vm = null;
         private bool CanGoNegative = true;
+
+        private int LifeTotal
+        {
+            get { return vm?.LifeTotal ?? 0; }
+            set { if (vm == null) return; vm.LifeTotal = value; }
+        }
 
         public event LifeChangedEventHandler LifeChanged;
 
@@ -38,21 +44,23 @@ namespace MtgLifeCounter
 
         }
 
-        public void Init(bool negativeAllowed, int life)
+        public void Init(PlayerViewModel pvm, bool negativeAllowed)
         {
+            vm = pvm;
             CanGoNegative = negativeAllowed;
 
-            if (!CanGoNegative && life < 0)
-                life = 0;
-            SetLife(life);
+            if (!CanGoNegative && vm.LifeTotal < 0)
+                vm.LifeTotal = 0;
+            SetLife(vm.LifeTotal);
         }
 
+       
         public  void SetLife(int life)
         {
             if (!CanGoNegative && life < 0)
                 life = 0;
 
-            LifeTotal = life;
+            vm.LifeTotal = life;
             UpdateLifeTotal();
         }
 

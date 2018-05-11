@@ -49,12 +49,12 @@ namespace MtgLifeCounter
             this._manager.PlayerColorChanged += _manager_PlayerColorChanged;
             this.viewModel = model;           
 
-            LifeControl.Init(true,viewModel.LifeTotal);
+            LifeControl.Init(viewModel,true);
             UpdateEnergy();
 
-            cmdLife1.Init(false, viewModel.CmdEnemy1);
-            cmdLife2.Init(false, viewModel.CmdEnemy2);
-            cmdLife3.Init(false, viewModel.CmdEnemy3);
+            cmdLife1.Init(new PlayerViewModel() { LifeTotal = viewModel.CmdEnemy1 },false);
+            cmdLife2.Init(new PlayerViewModel() { LifeTotal = viewModel.CmdEnemy2 }, false);
+            cmdLife3.Init(new PlayerViewModel() { LifeTotal = viewModel.CmdEnemy3 },false);
 
 
             ToprtAngle.Angle = 0;
@@ -101,9 +101,7 @@ namespace MtgLifeCounter
             cmdLife3.LifeChanged += CmdLife_LifeChanged;
 
             this.DataContext = viewModel;
-        }
-
-       
+        }       
 
         private async void CmdLife_LifeChanged(object sender, LifeChangedEventArgs e)
         {
