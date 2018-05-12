@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     RequestedTheme="Dark"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    d:DesignHeight="540"
+    d:DesignWidth="960">
 
     <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -22,7 +24,7 @@
         </Grid.ColumnDefinitions>
     </Grid>-->
 
-    <Page.BottomAppBar>
+    <!--<Page.BottomAppBar>
         <CommandBar x:Name="CmdBar">
             <AppBarButton Icon="Refresh" Label="Reset" Name="BarButtonReset" >
                 <Button.Flyout>
@@ -48,23 +50,24 @@
                 
             </AppBarButton>
         </CommandBar>
-    </Page.BottomAppBar>
+    </Page.BottomAppBar>-->
 
 
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="92*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="92*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="1*"/>
             <!--<RowDefinition Height="11*"/>-->
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="48*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="49*"/>
             <ColumnDefinition Width="1*"/>
 
@@ -75,12 +78,39 @@
         <local:PlayerControl x:Name="Player3" Grid.Row="3" Grid.Column="1" />
         <local:PlayerControl x:Name="Player4" Grid.Row="3" Grid.Column="3"/>
 
+
+        <Button
+                    Name="btnSettings"
+                        Grid.Row="2"
+                        Grid.Column="2"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Width="37" Click="btnSettings_Click">
+            <Button.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="&#xE700;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Foreground="White"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+
+        <local:SettingsBar x:Name="SettingsBar1" Grid.Row="2" Grid.Column="3" />
+        <local:SettingsBar x:Name="SettingsBar2" Grid.Row="2" Grid.Column="1"  >
+            <local:SettingsBar.Projection>
+                <PlaneProjection RotationZ="180"/>
+            </local:SettingsBar.Projection>
+        </local:SettingsBar>
+
         <!--<Button Name="cmdOpen"
                 Click="cmdOpen_Click"
                 HorizontalAlignment="Right"
             Grid.Row="5" Grid.Column="3">
             <Button.Content>
-                --><!--http://modernicons.io/segoe-mdl2/cheatsheet/--><!--
+                -->
+        <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+        <!--
                 <FontIcon  FontFamily="Segoe MDL2 Assets" 
                             Glyph="&#xE72C;"/>
             </Button.Content>

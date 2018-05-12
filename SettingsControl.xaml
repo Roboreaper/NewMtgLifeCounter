@@ -153,8 +153,8 @@
         </ToggleButton>
         <Button
                     Name="btnRotate"
-                        Grid.Row="0"
-                        Grid.Column="4"            
+                        Grid.Row="3"
+                        Grid.Column="3"            
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch"   
                         BorderThickness="1"
@@ -168,7 +168,7 @@
 
         <Button
                     Name="btnSet20"
-                        Grid.Row="2"
+                        Grid.Row="0"
                         Grid.Column="3"            
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch"   
@@ -184,8 +184,25 @@
             </Button.Content>
         </Button>
         <Button
+                    Name="btnSet30"
+                        Grid.Row="0"
+                        Grid.Column="4"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnSet30_Click">
+            <Button.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="&#xEB51;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="30" VerticalAlignment="Center" Foreground="White"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <Button
                     Name="btnSet40"
-                        Grid.Row="2"
+                        Grid.Row="1"
                         Grid.Column="4"            
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch"   
@@ -198,6 +215,21 @@
                     <TextBlock Text="&#xEB51;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Foreground="White"/>
                     <TextBlock Text="40" VerticalAlignment="Center" Foreground="White"/>
                 </StackPanel>
+            </Button.Content>
+        </Button>
+
+        <Button
+                    Name="btnReset"
+                        Grid.Row="1"
+                        Grid.Column="3"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnReset_Click">              
+                <Button.Content>
+                    <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                    <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="White" Glyph="&#xE895;"/>
             </Button.Content>
         </Button>
         <Button

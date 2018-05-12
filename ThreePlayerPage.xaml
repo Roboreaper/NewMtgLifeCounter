@@ -22,42 +22,14 @@
         </Grid.ColumnDefinitions>
     </Grid>-->
 
-    <Page.BottomAppBar>
-        <CommandBar x:Name="CmdBar">
-            <AppBarButton Icon="Refresh" Label="Reset" Name="BarButtonReset" >
-                <Button.Flyout>
-                    <Flyout>
-                        <StackPanel Background="Black">
-                            <Button x:Name="BtnResetMP" Click="BtnResetMP_Click" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                                Reset Players
-                            </Button>
-                            <Button x:Name="BtnReset3P" Click="BtnReset3P_Click" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                                4 Player Game
-                            </Button>
-                            <Button x:Name="BtnReset2P" Click="BtnReset2P_Click" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                                2 Player Game
-                            </Button>
-                            <Button x:Name="BtnResetCommander" Click="BtnResetCommander_Click" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                                Commander
-                            </Button>
-                        </StackPanel>
-                    </Flyout>
-                </Button.Flyout>
-            </AppBarButton>
-            <AppBarButton Icon="HideBcc" Label="Hide Bar" Name="BarButtonHideTitle" Click="BarButtonHideTitle_Click" >
-                
-            </AppBarButton>
-        </CommandBar>
-    </Page.BottomAppBar>
-
-
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="92*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="92*"/>
+            <RowDefinition Height="2*"/>
             <!--<RowDefinition Height="11*"/>-->
 
         </Grid.RowDefinitions>
@@ -98,13 +70,48 @@
             </local:PlayerControl>
         </Grid>
 
+        <Grid Grid.Row="2" Grid.Column="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90*" />
+                <ColumnDefinition Width="10*" />
+
+            </Grid.ColumnDefinitions>
+              <Button
+                    Name="btnSettings"                        
+                        Grid.Column="1"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Width="37"  Height="26" Margin="6,0,5,0" Click="btnSettings_Click">           
+            <Button.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="&#xE700;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Foreground="White">
+                        <!--<TextBlock.Projection>
+                            <PlaneProjection RotationZ="90"/>
+                        </TextBlock.Projection>-->
+                    </TextBlock>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+
+            <local:SettingsBar x:Name="SettingsBar" Grid.Column="0" HorizontalAlignment="Center"/>
+        </Grid>
+        
+      
+
+       
 
         <!--<Button Name="cmdOpen"
                 Click="cmdOpen_Click"
                 HorizontalAlignment="Right"
             Grid.Row="5" Grid.Column="3">
             <Button.Content>
-                --><!--http://modernicons.io/segoe-mdl2/cheatsheet/--><!--
+                -->
+        <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+        <!--
                 <FontIcon  FontFamily="Segoe MDL2 Assets" 
                             Glyph="&#xE72C;"/>
             </Button.Content>

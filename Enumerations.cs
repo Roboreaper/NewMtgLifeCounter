@@ -27,8 +27,11 @@ namespace MtgLifeCounter
 
     public enum Gametypes
     {
+        Current,
         MultiPlayer,
         Commander,
+        Brawl,
+
     }
 
     public enum PlayerID

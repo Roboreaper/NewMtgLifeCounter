@@ -149,5 +149,15 @@ namespace MtgLifeCounter
             playerControl.Flip();
         }
 
+        private void btnSet30_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.LifeTotal = 30;
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.GameType = Gametypes.Current;
+            Update();
+        }
     }
 }

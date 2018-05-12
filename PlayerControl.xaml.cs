@@ -47,7 +47,8 @@ namespace MtgLifeCounter
 
             this._manager = manager;
             this._manager.PlayerColorChanged += _manager_PlayerColorChanged;
-            this.viewModel = model;           
+            this.viewModel = model;
+            this.viewModel.PropertyChanged += ViewModel_PropertyChanged;
 
             LifeControl.Init(viewModel,true);
             UpdateEnergy();
@@ -101,6 +102,12 @@ namespace MtgLifeCounter
             cmdLife3.LifeChanged += CmdLife_LifeChanged;
 
             this.DataContext = viewModel;
+        }
+
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(PlayerViewModel.GameType))
+                this.Reset(viewModel.GameType);
         }       
 
         private async void CmdLife_LifeChanged(object sender, LifeChangedEventArgs e)
@@ -139,8 +146,12 @@ namespace MtgLifeCounter
 
         public void Reset(Gametypes type = Gametypes.MultiPlayer)
         {
-            _lastType = type;
-            viewModel.LifeTotal = type == Gametypes.MultiPlayer ? 20 : 40;
+            if (type == Gametypes.Current)
+                type = _lastType;
+
+            _lastType = type;            
+
+            viewModel.LifeTotal = _manager.GetLifeValue(type);
             viewModel.Energy = 0;
             viewModel.Experience = 0;
             viewModel.Poison = 0;
@@ -150,7 +161,7 @@ namespace MtgLifeCounter
 
             if (type == Gametypes.Commander)
                 LifeControl.SetValue(Grid.RowSpanProperty, 1);
-            else if (type == Gametypes.MultiPlayer)
+            else 
                 LifeControl.SetValue(Grid.RowSpanProperty, 2);
 
 

@@ -11,6 +11,9 @@ namespace MtgLifeCounter
         event EventHandler<ColorChangedEvent> PlayerColorChanged;
         int GetNumOfPlayers();
         List<PlayerID> ActivePlayers();
+        int GetLifeValue(Gametypes type);
+
+        void ResetPlayers(Gametypes type);
     }
 
 
@@ -66,7 +69,7 @@ namespace MtgLifeCounter
             if (e.PropertyName == "Color")
             {
                 PlayerColorChanged?.Invoke(this, new ColorChangedEvent(model.ID, model.Color));
-            }
+            }           
         }
 
         public int GetNumOfPlayers()
@@ -78,17 +81,50 @@ namespace MtgLifeCounter
         {
             return PlayerModels.Select(p => p.ID).ToList();
         }
+
+        public int GetLifeValue(Gametypes type)
+        {
+            switch (type)
+            {
+                default:
+                case Gametypes.MultiPlayer:
+                    return 20;
+                case Gametypes.Commander:
+                    return 40;
+                case Gametypes.Brawl:
+                    return 30;
+                 
+            }
+        }
+
+        public void ResetPlayers(Gametypes type)
+        {
+            Player1.GameType = type;
+            Player2.GameType = type;
+            Player3.GameType = type;
+            Player4.GameType = type;
+
+        }
     }
 
-    public class ColorChangedEvent : EventArgs
+    public class ColorChangedEvent : PlayerChangedEvent
     {
-        public PlayerID ID;
         public BackGroundColors Color;
 
         public ColorChangedEvent(PlayerID id, BackGroundColors color)
+            : base(id)
+        {
+            Color = color;
+        }
+    }
+
+    public class PlayerChangedEvent : EventArgs
+    {
+        public PlayerID ID;        
+
+        public PlayerChangedEvent(PlayerID id)
         {
             ID = id;
-            Color = color;
         }
     }
 }

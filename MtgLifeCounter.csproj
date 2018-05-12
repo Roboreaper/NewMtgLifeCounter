@@ -105,6 +105,9 @@
     <Compile Include="LifeControl.xaml.cs">
       <DependentUpon>LifeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsBar.xaml.cs">
+      <DependentUpon>SettingsBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ThreePlayerPage.xaml.cs">
       <DependentUpon>ThreePlayerPage.xaml</DependentUpon>
     </Compile>
@@ -151,6 +154,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="LifeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

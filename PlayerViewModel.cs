@@ -31,6 +31,11 @@ namespace MtgLifeCounter
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberExpression.Member.Name));
         }
 
+        public void Fire(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
     }
     public class PlayerViewModel : NotifyBase
     {
@@ -49,6 +54,8 @@ namespace MtgLifeCounter
 
         PlayerID _id = PlayerID.Unknown;
 
+        Gametypes _type = Gametypes.MultiPlayer;
+
         public int LifeTotal { get { return _lifeTotal; } set { if (value == _lifeTotal) return; _lifeTotal = value; FirePropertyChanged(() => this.LifeTotal); } }
         public CustomCounterType CurrentType { get { return _currentType; } set { if (value == _currentType) return; _currentType = value; FirePropertyChanged(() => this.CurrentType); } }
         public int Energy { get { return _energy; } set { if (value == _energy) return; _energy = value; FirePropertyChanged(() => this.Energy); } }
@@ -63,5 +70,8 @@ namespace MtgLifeCounter
         public BackGroundColors Color { get { return _color; } set { if (value == _color) return; _color = value; FirePropertyChanged(() => this.Color); } }
 
         public PlayerID ID { get { return _id; } set { if (value == _id) return; _id = value; FirePropertyChanged(() => this.ID); } }
+
+        public Gametypes GameType { get { return _type; } set { if (value != Gametypes.Current && value == _type) return; _type = value; FirePropertyChanged(() => this.GameType); } }
+      
     }
 }

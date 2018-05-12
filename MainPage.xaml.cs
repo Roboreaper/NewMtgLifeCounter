@@ -43,21 +43,27 @@ namespace MtgLifeCounter
             Player3.SetBackGround(BackGroundColors.Purple);
             Player4.SetBackGround(BackGroundColors.Blue);
 
-        }
+            SettingsBar1.Init(_manager, this);
+            SettingsBar2.Init(_manager, this);
 
 
-        private void cmdOpen_Click(object sender, RoutedEventArgs e)
-        {
-            CmdBar.IsOpen = true;
-        }
+            SettingsBar2.Visibility  = SettingsBar1.Visibility = Visibility.Collapsed;
+
+        }          
+        
+
+        //private void cmdOpen_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CmdBar.IsOpen = true;
+        //}
 
 
         private void BtnResetMP_Click(object sender, RoutedEventArgs e)
         {
-            Player1.Reset();
-            Player2.Reset();
-            Player3.Reset();
-            Player4.Reset();
+            Player1.Reset( Gametypes.Current);
+            Player2.Reset(Gametypes.Current);
+            Player3.Reset(Gametypes.Current);
+            Player4.Reset(Gametypes.Current);
         }
 
         private void BtnResetCommander_Click(object sender, RoutedEventArgs e)
@@ -120,6 +126,12 @@ namespace MtgLifeCounter
                 formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
                 coreTitleBar.ExtendViewIntoTitleBar = true;
             }           
+        }
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsBar2.Visibility = SettingsBar1.Visibility = SettingsBar1.Visibility  == Visibility.Collapsed ?  Visibility.Visible : Visibility.Collapsed;
+
         }
     }
 }
