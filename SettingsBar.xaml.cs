@@ -23,6 +23,9 @@ namespace MtgLifeCounter
         private GameManager Manager;
         private Page parentPage;
 
+        public delegate void RoutedEvent(object sender, RoutedEventArgs e);
+        public event RoutedEvent ButtonClicked;
+
         public SettingsBar()
         {
             this.InitializeComponent();
@@ -49,24 +52,25 @@ namespace MtgLifeCounter
         private void btnBrawl_Click(object sender, RoutedEventArgs e)
         {
             Manager.ResetPlayers(Gametypes.Brawl);
+            ButtonClicked?.Invoke(this, e);
         }
 
         private void btnCommander_Click(object sender, RoutedEventArgs e)
         {
             Manager.ResetPlayers(Gametypes.Commander );
-
+            ButtonClicked?.Invoke(this, e);
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             Manager.ResetPlayers(Gametypes.Current);
-
+            ButtonClicked?.Invoke(this, e);
         }
 
         private void btnMultiplayer_Click(object sender, RoutedEventArgs e)
         {
             Manager.ResetPlayers(Gametypes.MultiPlayer);
-
+            ButtonClicked?.Invoke(this, e);
         }
 
         private async void btn4Player_Click(object sender, RoutedEventArgs e)

@@ -9,56 +9,12 @@
     mc:Ignorable="d"
     d:DesignHeight="540"
     d:DesignWidth="960">
-
-    <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="45*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="45*"/>
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="45*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="45*"/>
-        </Grid.ColumnDefinitions>
-    </Grid>-->
-
-    <!--<Page.BottomAppBar>
-        <CommandBar x:Name="CmdBar">
-            <AppBarButton Icon="Refresh" Label="Reset" Name="BarButtonReset" >
-                <Button.Flyout>
-                    <Flyout>
-                        <StackPanel Background="Black">
-                            <Button x:Name="BtnResetMP" Click="BtnResetMP_Click" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                                Reset Players
-                            </Button>
-                            <Button x:Name="BtnReset3P" Click="BtnReset3P_Click" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                                3 Player Game
-                            </Button>
-                            <Button x:Name="BtnReset2P" Click="BtnReset2P_Click" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                                2 Player Game
-                            </Button>
-                            <Button x:Name="BtnResetCommander" Click="BtnResetCommander_Click" Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                                Commander
-                            </Button>
-                        </StackPanel>
-                    </Flyout>
-                </Button.Flyout>
-            </AppBarButton>
-            <AppBarButton Icon="HideBcc" Label="Hide Bar" Name="BarButtonHideTitle" Click="BarButtonHideTitle_Click" >
-                
-            </AppBarButton>
-        </CommandBar>
-    </Page.BottomAppBar>-->
-
-
-
+   
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="45*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition x:Name="SettingsRow"  MinHeight="10"/>
             <RowDefinition Height="45*"/>
             <RowDefinition Height="1*"/>
             <!--<RowDefinition Height="11*"/>-->
@@ -85,9 +41,8 @@
                         Grid.Column="2"            
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch"   
-                        BorderThickness="1"
-                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                        Background="Transparent" Width="37" Click="btnSettings_Click">
+                        BorderThickness="1"                       
+                        Background="Transparent" Margin="-15" Click="btnSettings_Click">
             <Button.Content>
                 <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
                 <StackPanel Orientation="Vertical">

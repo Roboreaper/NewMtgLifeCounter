@@ -6,36 +6,23 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     RequestedTheme="Dark"
-    mc:Ignorable="d">
-
-    <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="45*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="45*"/>
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="45*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="45*"/>
-        </Grid.ColumnDefinitions>
-    </Grid>-->
+    mc:Ignorable="d">   
 
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="92*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="92*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="41*"/>
+            <RowDefinition x:Name="SettingsRow" MinHeight="15"/>
+            <RowDefinition Height="41*"/>
+            <RowDefinition Height="1*"/>
             <!--<RowDefinition Height="11*"/>-->
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="45*"/>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="55*"/>
             <ColumnDefinition Width="1*"/>
@@ -50,41 +37,49 @@
         </local:PlayerControl>-->
         <local:PlayerControl x:Name="Player3" Grid.Row="3" Grid.Column="1"  />
 
-        <Grid Grid.Row="1" Grid.Column="3" Grid.RowSpan="3">
+        <Grid Grid.Row="1" Grid.Column="4" Grid.RowSpan="3">
             <Grid.RowDefinitions >
-                <RowDefinition Height="12*"/>
-                <RowDefinition Height="95*"/>
-                <RowDefinition Height="12*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="15*"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="98*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="96*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <local:PlayerControl x:Name="Player2"  Grid.Column="1" Grid.Row="1">
+            <local:PlayerControl x:Name="Player2"  Grid.Column="1" Grid.Row="1" >
                 <local:PlayerControl.Projection>
                     <PlaneProjection RotationZ="90"/>
                 </local:PlayerControl.Projection>
             </local:PlayerControl>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.Column="1">
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90*" />
                 <ColumnDefinition Width="10*" />
 
             </Grid.ColumnDefinitions>
-              <Button
-                    Name="btnSettings"                        
-                        Grid.Column="1"            
-                        HorizontalAlignment="Stretch" 
-                        VerticalAlignment="Stretch"   
-                        BorderThickness="1"
-                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                        Background="Transparent" Width="37"  Height="26" Margin="6,0,5,0" Click="btnSettings_Click">           
+         
+            
+
+        </Grid>
+
+        <local:SettingsBar x:Name="SettingsBar" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"/>
+
+        <Button
+                Name="btnSettings"      
+                Grid.Row="2"
+                Grid.Column="2"                        
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="Transparent"  
+                Margin="-10" 
+                Click="btnSettings_Click">
             <Button.Content>
                 <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
                 <StackPanel Orientation="Vertical">
@@ -97,12 +92,6 @@
             </Button.Content>
         </Button>
 
-            <local:SettingsBar x:Name="SettingsBar" Grid.Column="0" HorizontalAlignment="Center"/>
-        </Grid>
-        
-      
-
-       
 
         <!--<Button Name="cmdOpen"
                 Click="cmdOpen_Click"

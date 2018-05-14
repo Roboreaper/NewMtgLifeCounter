@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -41,7 +42,7 @@ namespace MtgLifeCounter
             Player3.SetBackGround(BackGroundColors.Purple);
           
             SettingsBar.Init(_manager, this);
-
+            SettingsBar.ButtonClicked += btnSettings_Click;
 
             SettingsBar.Visibility = Visibility.Collapsed;
 
@@ -117,10 +118,25 @@ namespace MtgLifeCounter
             }           
         }
 
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        private async void btnSettings_Click(object sender, RoutedEventArgs e)
         {
            SettingsBar.Visibility = SettingsBar.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
-
+            if (SettingsBar.Visibility == Visibility.Visible)
+            {
+                SettingsRow.MinHeight = 25;
+                await Task.Delay(TimeSpan.FromSeconds(0.05));
+                SettingsRow.MinHeight = 35;
+                await Task.Delay(TimeSpan.FromSeconds(0.05));
+                SettingsRow.MinHeight = 45;
+            }
+            else
+            {
+                SettingsRow.MinHeight = 35;
+                await Task.Delay(TimeSpan.FromSeconds(0.05));
+                SettingsRow.MinHeight = 25;
+                await Task.Delay(TimeSpan.FromSeconds(0.05));
+                SettingsRow.MinHeight = 15;
+            }
         }
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -44,13 +45,21 @@ namespace MtgLifeCounter
             Player4.SetBackGround(BackGroundColors.Blue);
 
             SettingsBar1.Init(_manager, this);
+            SettingsBar1.ButtonClicked += btnSettings_Click;
             SettingsBar2.Init(_manager, this);
+            SettingsBar2.ButtonClicked += btnSettings_Click;
 
 
             SettingsBar2.Visibility  = SettingsBar1.Visibility = Visibility.Collapsed;
 
-        }          
-        
+
+        }
+
+        private void btnSettings_Click()
+        {
+            throw new NotImplementedException();
+        }
+
 
         //private void cmdOpen_Click(object sender, RoutedEventArgs e)
         //{
@@ -110,28 +119,25 @@ namespace MtgLifeCounter
 
         }
 
-        private void BarButtonHideTitle_Click(object sender, RoutedEventArgs e)
+        private async void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-
-
-            if (coreTitleBar.ExtendViewIntoTitleBar)
+            SettingsBar2.Visibility = SettingsBar1.Visibility = SettingsBar1.Visibility  == Visibility.Collapsed ?  Visibility.Visible : Visibility.Collapsed;
+            if(SettingsBar2.Visibility == Visibility.Visible)
             {
-                formattableTitleBar.ButtonBackgroundColor = Colors.White;
-                coreTitleBar.ExtendViewIntoTitleBar = false;
+                SettingsRow.MinHeight = 21;
+                await Task.Delay(TimeSpan.FromSeconds(0.05));
+                SettingsRow.MinHeight = 33;
+                await Task.Delay(TimeSpan.FromSeconds(0.05));
+                SettingsRow.MinHeight = 45;
             }
             else
             {
-                formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-                coreTitleBar.ExtendViewIntoTitleBar = true;
-            }           
-        }
-
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
-        {
-            SettingsBar2.Visibility = SettingsBar1.Visibility = SettingsBar1.Visibility  == Visibility.Collapsed ?  Visibility.Visible : Visibility.Collapsed;
-
+                SettingsRow.MinHeight = 33;
+                await Task.Delay(TimeSpan.FromSeconds(0.05));
+                SettingsRow.MinHeight = 21;
+                await Task.Delay(TimeSpan.FromSeconds(0.05));
+                SettingsRow.MinHeight = 10;
+            }
         }
     }
 }
