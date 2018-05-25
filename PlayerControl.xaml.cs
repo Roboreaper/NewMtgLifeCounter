@@ -65,7 +65,7 @@ namespace MtgLifeCounter
             cmdLife2.Visibility = Visibility.Collapsed;
             cmdLife3.Visibility = Visibility.Collapsed;
 
-            SettingsControl.Init(this.viewModel, this, OnClose);
+            SettingsControl.Init(this.viewModel, this, OnCloseSettings);
 
             var cmd = 1;
             foreach (var id in _manager.ActivePlayers())
@@ -524,7 +524,7 @@ namespace MtgLifeCounter
             }
         }
 
-        private void btnRotate_Click(object sender, RoutedEventArgs e)
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
             PlayerContainer.Visibility = Visibility.Collapsed;
             SettingsControl.Visibility = Visibility.Visible;
@@ -532,7 +532,7 @@ namespace MtgLifeCounter
 
         }
 
-        private void OnClose()
+        private void OnCloseSettings()
         {
             PlayerContainer.Visibility = Visibility.Visible;
             SettingsControl.Visibility = Visibility.Collapsed;
@@ -541,6 +541,14 @@ namespace MtgLifeCounter
             UpdateEnergy();
             UpdateCommanderDmg();
 
+        }
+       
+        private void btnSettings_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            if(e.HoldingState ==  Windows.UI.Input.HoldingState.Completed)
+            {
+                Reset(_lastType);
+            }
         }
     }
 }

@@ -178,14 +178,15 @@
                              Background="Transparent">
                         <TextBlock HorizontalAlignment="Center" Style="{StaticResource BasicButtonStyle}">+</TextBlock>
                     </Button>
+                    
                     <Button 
-                        Name="btnRotate"
+                        Name="btnSettings"
                         Grid.Row="3"
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch"   
                           BorderThickness="1"
                          BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                         Background="Transparent" Click="btnRotate_Click">
+                         Background="Transparent" Click="btnSettings_Click" IsHoldingEnabled="True" Holding="btnSettings_Holding">
                         <Button.Content>
                             <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
                             <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="White" Glyph="&#xE712;"/>                            

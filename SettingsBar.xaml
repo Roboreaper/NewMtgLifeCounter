@@ -15,18 +15,19 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60"/> <!-- 0 -->
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="60"/> <!-- 2 -->
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="60"/> <!-- 4 -->
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="60"/> <!-- 6 -->
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="60"/> <!-- 8 -->
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="60"/> <!-- 10 -->
-            <ColumnDefinition Width="5"/>
+            <ColumnDefinition x:Name="colReset" Width="60"/> <!-- 0 -->
+            <ColumnDefinition x:Name="colSep1"  Width="5"/>
+            <ColumnDefinition x:Name="colMp"    Width="60"/> <!-- 2 -->
+            <ColumnDefinition x:Name="colSep2"  Width="5"/>
+            <ColumnDefinition x:Name="colCmdr"  Width="60"/> <!-- 4 -->
+            <ColumnDefinition x:Name="colSep3"  Width="5"/>
+            <ColumnDefinition x:Name="colBrwl"  Width="60"/> <!-- 6 -->
+            <ColumnDefinition x:Name="colSep4"  Width="10" />
+            <ColumnDefinition x:Name="col3P"    Width="60"/> <!-- 8 -->
+            <ColumnDefinition x:Name="colSep5"  Width="5"/>
+            <ColumnDefinition x:Name="col4P"    Width="60"/> <!-- 10 -->
+            <ColumnDefinition x:Name="colSep6"  Width="10" />
+            <ColumnDefinition x:Name="colQt"    Width="60"/>  <!-- 12 -->
         </Grid.ColumnDefinitions>
 
         <Button
@@ -138,6 +139,29 @@
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="&#xE908;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Foreground="White"/>
                     <TextBlock Text="4P" VerticalAlignment="Center" Foreground="White"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+
+        <StackPanel Grid.Row="0" Grid.Column="11" Background="White"/>
+
+        <Button
+                    Name="btnQuit"
+                        Grid.Row="0"
+                        Grid.Column="12"            
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"   
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent" Click="btnQuit_Click">
+            <Button.Projection>
+                <PlaneProjection RotationZ="0" CenterOfRotationZ="0"/>
+            </Button.Projection>
+            <Button.Content>
+                <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="&#xE052;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text="Quit" VerticalAlignment="Center" Foreground="White"/>
                 </StackPanel>
             </Button.Content>
         </Button>

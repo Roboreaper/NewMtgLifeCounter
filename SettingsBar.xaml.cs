@@ -37,10 +37,24 @@ namespace MtgLifeCounter
             this.parentPage = parent;
 
             if (parentPage.GetType() == typeof(MainPage))
+            {
                 btn4Player.Visibility = Visibility.Collapsed;
-            else if (parentPage.GetType() == typeof(ThreePlayerPage))
-                btn3Player.Visibility = Visibility.Collapsed;                
+                col4P.Width = new GridLength(1.0);
 
+            }
+
+            if (parentPage.GetType() == typeof(ThreePlayerPage))
+            {
+                btn3Player.Visibility = Visibility.Collapsed;
+                col3P.Width = new GridLength(1.0);
+            }
+
+            if (Windows.UI.ViewManagement.UIViewSettings.GetForCurrentView().UserInteractionMode == Windows.UI.ViewManagement.UserInteractionMode.Mouse)
+            {
+                btnQuit.Visibility = Visibility.Collapsed;
+                col3P.Width = new GridLength(1.0);
+                colSep6.Width = new GridLength(1.0);
+            }
         }
 
         private async void btn3Player_Click(object sender, RoutedEventArgs e)
@@ -77,6 +91,15 @@ namespace MtgLifeCounter
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
                       () => parentPage.Frame.Navigate(typeof(MainPage)));
+        }
+
+        private async void btnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog notify = new ContentDialog() { Title = "ShutDown Request", Content = "Are you sure?", PrimaryButtonText = "No", SecondaryButtonText = "Yes" };
+
+            ContentDialogResult res = await notify.ShowAsync();
+            if( res ==  ContentDialogResult.Secondary)
+                Application.Current.Exit();
         }
     }
 }
