@@ -40,7 +40,7 @@ namespace MtgLifeCounter
     public class PlayerViewModel : NotifyBase
     {
         int _lifeTotal = 20;
-        CustomCounterType _currentType = CustomCounterType.Energy;
+        CustomCounterType _counterType = CustomCounterType.Energy;
         int _energy = 0;
         int _experience = 0;
         int _poison = 0;
@@ -57,7 +57,7 @@ namespace MtgLifeCounter
         Gametypes _type = Gametypes.MultiPlayer;
 
         public int LifeTotal { get { return _lifeTotal; } set { if (value == _lifeTotal) return; _lifeTotal = value; FirePropertyChanged(() => this.LifeTotal); } }
-        public CustomCounterType CurrentType { get { return _currentType; } set { if (value == _currentType) return; _currentType = value; FirePropertyChanged(() => this.CurrentType); } }
+        public CustomCounterType CounterType { get { return _counterType; } set { if (value == _counterType) return; _counterType = value; FirePropertyChanged(() => this.CounterType); } }
         public int Energy { get { return _energy; } set { if (value == _energy) return; _energy = value; FirePropertyChanged(() => this.Energy); } }
         public int Poison { get { return _poison; } set { if (value == _poison) return; _poison = value; FirePropertyChanged(() => this.Poison); } }
         public int Experience { get { return _experience; } set { if (value == _experience) return; _experience = value; FirePropertyChanged(() => this.Experience); } }

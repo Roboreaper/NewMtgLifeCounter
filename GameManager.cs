@@ -101,8 +101,10 @@ namespace MtgLifeCounter
         {
             Player1.GameType = type;
             Player2.GameType = type;
-            Player3.GameType = type;
-            Player4.GameType = type;
+            if (PlayerModels.Count >= 3)
+                Player3.GameType = type;
+            if (PlayerModels.Count >= 4)
+                Player4.GameType = type;
 
         }
     }

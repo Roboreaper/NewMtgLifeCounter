@@ -51,7 +51,7 @@ namespace MtgLifeCounter
             this.viewModel.PropertyChanged += ViewModel_PropertyChanged;
 
             LifeControl.Init(viewModel,true);
-            UpdateEnergy();
+            UpdateCustomType();
 
             cmdLife1.Init(new PlayerViewModel() { LifeTotal = viewModel.CmdEnemy1 },false);
             cmdLife2.Init(new PlayerViewModel() { LifeTotal = viewModel.CmdEnemy2 }, false);
@@ -101,7 +101,41 @@ namespace MtgLifeCounter
             cmdLife2.LifeChanged += CmdLife_LifeChanged;
             cmdLife3.LifeChanged += CmdLife_LifeChanged;
 
+            this.LifeControl.LifeChangeHistory += LifeControl_LifeChanged;
+
             this.DataContext = viewModel;
+        }
+
+        CustomCounterType _lastCounterType = CustomCounterType.Experience;
+        int _LifeHistory = 0;
+        private async void LifeControl_LifeChanged(object sender, LifeChangedEventArgs e)
+        {
+
+            if (!Dispatcher.HasThreadAccess)
+            {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { LifeControl_LifeChanged(sender, e); });
+            }
+            else
+            {
+
+                if (viewModel.CounterType != CustomCounterType.LifeHistory)
+                {
+                    imgCountertype.Source = new BitmapImage();
+                    _lastCounterType = viewModel.CounterType;
+                    viewModel.CounterType = CustomCounterType.LifeHistory;
+                }
+
+                if( e.Lifechanged == int.MinValue)
+                {
+                    viewModel.CounterType = _lastCounterType;
+                    imgCountertype.Source = new BitmapImage(new Uri("ms-appx:///" + CounterTypeHelper.CounterTypeImage(viewModel.CounterType)));
+                }
+
+                _LifeHistory = e.Lifechanged;
+
+                UpdateCustomType();
+            }
+           
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -165,123 +199,55 @@ namespace MtgLifeCounter
                 LifeControl.SetValue(Grid.RowSpanProperty, 2);
 
 
+            cmdLife1.LifeChanged -= CmdLife_LifeChanged;
+            cmdLife2.LifeChanged -= CmdLife_LifeChanged;
+            cmdLife3.LifeChanged -= CmdLife_LifeChanged;
+
+            var cmd = 1;
+            foreach (var id in _manager.ActivePlayers())
+            {
+                if (id == viewModel.ID)
+                    continue;
+                if (id == PlayerID.Unknown)
+                    continue;
+
+                CommanderButtonMapping[id] = cmd;
+
+                switch (cmd)
+                {
+                    case 1:
+                        cmdLife1.Visibility = Visibility.Visible;
+                        break;
+
+                    case 2:
+                        cmdLife2.Visibility = Visibility.Visible;
+                        break;
+
+                    case 3:
+                        cmdLife3.Visibility = Visibility.Visible;
+                        break;
+
+                    default:
+                        break;
+                }
+                cmd++;
+            }
+
+            cmdLife1.LifeChanged += CmdLife_LifeChanged;
+            cmdLife2.LifeChanged += CmdLife_LifeChanged;
+            cmdLife3.LifeChanged += CmdLife_LifeChanged;
+
+
             BorderCmd.Visibility = type == Gametypes.Commander ? Visibility.Visible : Visibility.Collapsed;
 
             LifeControl.SetLife(viewModel.LifeTotal);
-            UpdateEnergy();
+            UpdateCustomType();
             UpdateCommanderDmg();
-        }        
-
-        //private async void BtnDecreaseLife_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //viewModel.LifeTotal--;
-        //    await UpdateLifeTotalAsync(-1);
-        //}
-
-        //private async void BtnIncreaseLife_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //viewModel.LifeTotal++;
-        //    await UpdateLifeTotalAsync(1);
-        //}
-
-        //public void UpdateLifeTotal()
-        //{
-        //    string lifeTotalString = viewModel.LifeTotal.ToString();
-        //    string leftTxt = "";
-        //    string rightTxt = "";
-        //    if (viewModel.LifeTotal < 0)
-        //    {
-        //        leftTxt = "-";
-
-        //        if (lifeTotalString.Length > 2)
-        //        {
-        //            leftTxt += lifeTotalString[1];
-        //            rightTxt = lifeTotalString.Substring(2);
-        //        }
-        //        else
-        //        {
-        //            rightTxt = lifeTotalString.Substring(1);
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //        if (viewModel.LifeTotal <= 9)
-        //        {
-        //            leftTxt = "0";
-        //            rightTxt = lifeTotalString;
-        //        }
-        //        else
-        //        {
-        //            leftTxt += lifeTotalString[0];
-        //            rightTxt = lifeTotalString.Substring(1);
-        //        }
-        //    }
-
-        //    tbDecreaseLife.Text = leftTxt;
-        //    tbIncreaseLife.Text = rightTxt;
-        //}
-
-        //public async Task UpdateLifeTotalAsync(int i)
-        //{
-        //    await Task.Run(() =>
-        //    {
-        //        viewModel.LifeTotal += i;
-        //        string lifeTotalString = viewModel.LifeTotal.ToString();
-        //        string leftTxt = "";
-        //        string rightTxt = "";
-        //        if (viewModel.LifeTotal < 0)
-        //        {
-        //            leftTxt = "-";
-
-        //            if (lifeTotalString.Length > 2)
-        //            {
-        //                leftTxt += lifeTotalString[1];
-        //                rightTxt = lifeTotalString.Substring(2);
-        //            }
-        //            else
-        //            {
-        //                rightTxt = lifeTotalString.Substring(1);
-        //            }
-
-        //        }
-        //        else
-        //        {
-        //            if (viewModel.LifeTotal <= 9)
-        //            {
-        //                leftTxt = "0";
-        //                rightTxt = lifeTotalString;
-        //            }
-        //            else
-        //            {
-        //                leftTxt += lifeTotalString[0];
-        //                rightTxt = lifeTotalString.Substring(1);
-        //            }
-        //        }
-
-        //        //tbDecreaseLife.Text = leftTxt;
-        //        //tbIncreaseLife.Text = rightTxt;
-        //        UpdateLifeTextBox(leftTxt, rightTxt);
-        //    });
-        //}
-
-        //private async void UpdateLifeTextBox(string left, string right)
-        //{
-
-        //    if (!tbDecreaseLife.Dispatcher.HasThreadAccess)
-        //    {
-        //        await tbDecreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { tbDecreaseLife.Text = left; });
-        //    }
-
-        //    if (!tbIncreaseLife.Dispatcher.HasThreadAccess)
-        //    {
-        //        await tbIncreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { tbIncreaseLife.Text = right; });
-        //    }
-        //}
+        }    
 
         private void BtnIncreaseEnergy_Click(object sender, RoutedEventArgs e)
         {
-            switch (viewModel.CurrentType)
+            switch (viewModel.CounterType)
             {
                 case CustomCounterType.Energy:
                     viewModel.Energy++;
@@ -295,12 +261,12 @@ namespace MtgLifeCounter
             }
 
 
-            UpdateEnergy();
+            UpdateCustomType();
         }
 
         private void BtnDecreaseEnergy_Click(object sender, RoutedEventArgs e)
         {
-            switch (viewModel.CurrentType)
+            switch (viewModel.CounterType)
             {
                 case CustomCounterType.Energy:
                     viewModel.Energy--;
@@ -319,13 +285,13 @@ namespace MtgLifeCounter
                     break;
             }
 
-            UpdateEnergy();
+            UpdateCustomType();
         }
 
 
-        private void UpdateEnergy()
+        private void UpdateCustomType()
         {
-            switch (viewModel.CurrentType)
+            switch (viewModel.CounterType)
             {
                 case CustomCounterType.Energy:
                     tbCounterType.Text = viewModel.Energy.ToString();// $"Energy: {viewModel.Energy}";
@@ -335,6 +301,9 @@ namespace MtgLifeCounter
                     break;
                 case CustomCounterType.Poison:
                     tbCounterType.Text = viewModel.Poison.ToString();// $"Poison: {viewModel.Poison}";
+                    break;
+                case CustomCounterType.LifeHistory:
+                    tbCounterType.Text = _LifeHistory.ToString();
                     break;
             }
         }
@@ -351,81 +320,41 @@ namespace MtgLifeCounter
 
         private void SwitchCounterType()
         {
-            switch (viewModel.CurrentType)
+            if (viewModel.CounterType == CustomCounterType.LifeHistory)
+                return;
+
+            switch (viewModel.CounterType)
             {
                 case CustomCounterType.Energy:
-                    viewModel.CurrentType = CustomCounterType.Experience;
+                    viewModel.CounterType = CustomCounterType.Experience;
                     break;
                 case CustomCounterType.Experience:
-                    viewModel.CurrentType = CustomCounterType.Poison;
+                    viewModel.CounterType = CustomCounterType.Poison;
                     break;
                 case CustomCounterType.Poison:
-                    viewModel.CurrentType = CustomCounterType.Energy;
+                    viewModel.CounterType = CustomCounterType.Energy;
                     break;
             }
-            UpdateEnergy();
+            UpdateCustomType();
 
-            imgCountertype.Source = new BitmapImage(new Uri("ms-appx:///" + CounterTypeHelper.CounterTypeImage(viewModel.CurrentType)));
+            imgCountertype.Source = new BitmapImage(new Uri("ms-appx:///" + CounterTypeHelper.CounterTypeImage(viewModel.CounterType)));
         }      
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             Reset(_lastType);
         }
-
-
-        //private async void btnCmdE1_Click(object sender, RoutedEventArgs e)
-        //{
-        //    await Task.Run(async () =>
-        //    {
-        //        this.viewModel.CmdEnemy1++;
-        //        //viewModel.LifeTotal--;
-        //        await LifeControl.UpdateLifeTotalAsync(-1);
-        //        UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1, this.viewModel.CmdEnemy2, this.viewModel.CmdEnemy3);
-        //    });
-        //}
-
-        //private async void btnCmdE2_Click(object sender, RoutedEventArgs e)
-        //{
-        //    await Task.Run(async () =>
-        //    {
-        //        this.viewModel.CmdEnemy2++;
-        //        //viewModel.LifeTotal--;
-        //        await LifeControl.UpdateLifeTotalAsync(-1);
-        //        UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1, this.viewModel.CmdEnemy2, this.viewModel.CmdEnemy3);
-        //    });
-        //}
-
-        //private async void btnCmdE3_Click(object sender, RoutedEventArgs e)
-        //{
-        //    await Task.Run(async () =>
-        //    {
-        //        this.viewModel.CmdEnemy3++;
-        //        //viewModel.LifeTotal--;
-        //        await LifeControl.UpdateLifeTotalAsync(-1);
-        //        //UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1.ToString(), this.viewModel.CmdEnemy2.ToString(), this.viewModel.CmdEnemy3.ToString());
-        //        UpdateCommanderDmgAsync(this.viewModel.CmdEnemy1, this.viewModel.CmdEnemy2, this.viewModel.CmdEnemy3);
-        //    });
-
-        //}
-
+               
         private void UpdateCommanderDmg()
         {
             cmdLife1.SetLife(viewModel.CmdEnemy1);
             cmdLife2.SetLife(viewModel.CmdEnemy2);
             cmdLife3.SetLife(viewModel.CmdEnemy3);
 
-            //cmdE1TB.Text = this.viewModel.CmdEnemy1.ToString();
-            //cmdE2TB.Text = this.viewModel.CmdEnemy2.ToString();
-            //cmdE3TB.Text = this.viewModel.CmdEnemy3.ToString();
         }
 
         private async void UpdateCommanderDmgAsync(int cmd1, int cmd2, int cmd3)
         {
-            //cmdE1TB.Text = this.viewModel.CmdEnemy1.ToString();
-            //cmdE2TB.Text = this.viewModel.CmdEnemy2.ToString();
-            //cmdE3TB.Text = this.viewModel.CmdEnemy3.ToString();
-
             await cmdLife1.SetLifeAsync(viewModel.CmdEnemy1);
             await cmdLife2.SetLifeAsync(viewModel.CmdEnemy2);
             await cmdLife3.SetLifeAsync(viewModel.CmdEnemy3);
@@ -538,7 +467,7 @@ namespace MtgLifeCounter
             SettingsControl.Visibility = Visibility.Collapsed;
 
             LifeControl.SetLife(viewModel.LifeTotal);
-            UpdateEnergy();
+            UpdateCustomType();
             UpdateCommanderDmg();
 
         }

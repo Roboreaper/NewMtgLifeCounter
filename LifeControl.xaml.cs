@@ -24,6 +24,9 @@ namespace MtgLifeCounter
         private PlayerViewModel vm = null;
         private bool CanGoNegative = true;
 
+        private int LifeChangedAmmount = 0;
+        private System.Threading.Timer LifeChangedAmmountTimer = null;
+
         private int LifeTotal
         {
             get { return vm?.LifeTotal ?? 0; }
@@ -31,6 +34,7 @@ namespace MtgLifeCounter
         }
 
         public event LifeChangedEventHandler LifeChanged;
+        public event LifeChangedEventHandler LifeChangeHistory;
 
         public LifeControl()
         {
@@ -142,13 +146,29 @@ namespace MtgLifeCounter
 
                      LifeTotal += i;
 
+                    LifeChangedAmmount += i;
+                    if (LifeChangedAmmountTimer == null)
+                    {
+                        LifeChangedAmmountTimer = new System.Threading.Timer(LifeChangedAmmountTimerCallback, null, 1000, -1);
+                    }
+                    else
+                        LifeChangedAmmountTimer.Change(1000, -1);
+
                     string leftTxt, rightTxt;
                     LifeTotalToText(out leftTxt, out rightTxt);
 
                     UpdateLifeTextBox(leftTxt, rightTxt);
                     LifeChanged?.Invoke(this, new LifeChangedEventArgs(i));
+                    LifeChangeHistory.Invoke(this, new LifeChangedEventArgs(LifeChangedAmmount));
                 }
             });
+        }
+
+        private void LifeChangedAmmountTimerCallback(object state)
+        {
+            LifeChangedAmmount = 0;
+            LifeChangeHistory.Invoke(this, new LifeChangedEventArgs(int.MinValue));
+            LifeChangedAmmountTimer.Change(-1, -1);
         }
 
         private void LifeTotalToText(out string leftTxt, out string rightTxt)

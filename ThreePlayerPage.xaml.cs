@@ -25,7 +25,7 @@ namespace MtgLifeCounter
 {
     public sealed partial class ThreePlayerPage : Page
     {
-        GameManager _manager = new GameManager();
+        GameManager _manager = new GameManager(3);
 
         public ThreePlayerPage()
         {

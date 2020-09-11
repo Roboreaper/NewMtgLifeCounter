@@ -10,7 +10,8 @@ namespace MtgLifeCounter
     {
         Poison,
         Experience,
-        Energy
+        Energy,
+        LifeHistory,
     }
 
     public enum BackGroundColors
