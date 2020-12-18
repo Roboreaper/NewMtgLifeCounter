@@ -102,7 +102,6 @@
             </Button.Content>
         </Button>
 
-        <StackPanel Grid.Row="0" Grid.Column="7" Background="White"/>
 
         <Button
                     Name="btn3Player"
@@ -143,7 +142,6 @@
             </Button.Content>
         </Button>
 
-        <StackPanel Grid.Row="0" Grid.Column="11" Background="White"/>
 
         <Button
                     Name="btnQuit"

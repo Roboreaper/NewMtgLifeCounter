@@ -52,8 +52,8 @@ namespace MtgLifeCounter
             if (Windows.UI.ViewManagement.UIViewSettings.GetForCurrentView().UserInteractionMode == Windows.UI.ViewManagement.UserInteractionMode.Mouse)
             {
                 btnQuit.Visibility = Visibility.Collapsed;
-                col3P.Width = new GridLength(1.0);
-                colSep6.Width = new GridLength(1.0);
+                //col3P.Width = new GridLength(1.0);
+                //colSep6.Width = new GridLength(1.0);
             }
         }
 

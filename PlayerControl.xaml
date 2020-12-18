@@ -10,7 +10,7 @@
     d:DesignWidth="600">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Key="PlayerColorBrush" Color="Red" />
+        <SolidColorBrush x:Key="PlayerColorBrush" Color="red" />
         <SolidColorBrush x:Key="BasicColorBrush" Color="White" />
         
         <Style x:Key="LifeStyle" TargetType="TextBlock">
@@ -40,10 +40,26 @@
             <Setter Property="Background" Value="Transparent" />
         </Style>
 
-    </UserControl.Resources>
+		<Style TargetType="Button" x:Key="FlatButtonStyle">		
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border BorderThickness="2"
+								BorderBrush="{ThemeResource PlayerColorBrush}"
+								Background="{TemplateBinding Background}"
+								CornerRadius="4">
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 
 
-    <Border BorderBrush="Orange" BorderThickness="1">
+	</UserControl.Resources>
+
+
+	<Border BorderBrush="{StaticResource PlayerColorBrush}" BorderThickness="2" CornerRadius="10">
 
         <Grid Name="TopPlayerContainer" RenderTransformOrigin="0.5,0.5">
             <Grid.RowDefinitions>
@@ -59,10 +75,10 @@
 
             </Grid.RenderTransform>
             
-            <Grid Name="PlayerContainer"  Visibility="Visible">
+            <Grid Name="PlayerContainer"  Visibility="Visible" >
             <Grid.RowDefinitions>                
-                <RowDefinition Height="8*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height="2.9*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
@@ -84,9 +100,9 @@
 
             </Grid.RenderTransform>          
 
-            <local:LifeControl x:Name="LifeControl"  Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2"/>
+            <local:LifeControl x:Name="LifeControl"  Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2" BorderThickness="0"/>
 
-            <Border Name="BorderCmd" Grid.Row="1" Grid.Column="0" BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="1" Visibility="Collapsed">
+			<Border Name="BorderCmd" Grid.Row="1" Grid.Column="0" BorderBrush="{ThemeResource PlayerColorBrush}" BorderThickness="0" Visibility="Collapsed" Margin="0,0,0,2">
                 <Grid Name="GridCmd" Grid.Row="2" Grid.Column="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -94,44 +110,24 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:LifeControl x:Name="cmdLife1"  Grid.Row="0" Grid.Column="0"/>
+						<Border Grid.Row="0" Grid.Column="0" BorderThickness="2" BorderBrush="{ThemeResource PlayerColorBrush}" Margin="2,0,2,3" CornerRadius="4">
+							<local:LifeControl x:Name="cmdLife1" />
+						</Border>
 
-                    <local:LifeControl x:Name="cmdLife2"  Grid.Row="0" Grid.Column="1"/>
+						<Border Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="{ThemeResource PlayerColorBrush}" Margin="2,0,2,3" CornerRadius="4">
+							<local:LifeControl x:Name="cmdLife2"  />
+						</Border>
 
-                    <local:LifeControl x:Name="cmdLife3"  Grid.Row="0" Grid.Column="2" />
-                    <!--<Button   
-                        Name="btnCmdE1"                        
-                        Grid.Column="0"
-                        HorizontalAlignment="Stretch" 
-                        VerticalAlignment="Stretch" 
-                        Click="btnCmdE1_Click">
-                        <TextBlock Name="cmdE1TB"
-                                   Style="{StaticResource CmdLife}">0</TextBlock>
-                    </Button>
-                    <Button   
-                         Name="btnCmdE2"
-                        Grid.Column="1"
-                        HorizontalAlignment="Stretch" 
-                        VerticalAlignment="Stretch"
-                        Click="btnCmdE2_Click">
-                        <TextBlock Name="cmdE2TB"
-                                    Style="{StaticResource CmdLife}">0</TextBlock>
-                    </Button>
-
-                    <Button   
-                        Name="btnCmdE3"
-                        Grid.Column="2"
-                        HorizontalAlignment="Stretch" 
-                        VerticalAlignment="Stretch" 
-                        Click="btnCmdE3_Click">
-                        <TextBlock Name="cmdE3TB"
-                                    Style="{StaticResource CmdLife}">0</TextBlock>
-                    </Button>-->
+						<Border  Grid.Row="0" Grid.Column="2" BorderThickness="2" BorderBrush="{ThemeResource PlayerColorBrush}" Margin="2,0,0,3" CornerRadius="4">
+							<local:LifeControl x:Name="cmdLife3" />
+						</Border>
+                   
+                
                 </Grid>
             </Border>
 
-            <Border BorderBrush="Orange" BorderThickness="1" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
-                <Grid Name="GridOptions" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+			<Border BorderBrush="{StaticResource PlayerColorBrush}" BorderThickness="0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" CornerRadius="4">
+                <Grid Name="GridOptions" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" CornerRadius="4" Margin="4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
@@ -145,8 +141,10 @@
                         Grid.Row="0"
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" 
+						Style="{StaticResource FlatButtonStyle}"
                         Click="btnCounterType_Click"
-                        BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                        BorderBrush="{ThemeResource PlayerColorBrush}"
+						Margin="1">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -162,10 +160,11 @@
                             Grid.Row="2"  
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch"  
-                            BorderThickness="1"
+							Style="{StaticResource FlatButtonStyle}"
                             Click="BtnDecreaseEnergy_Click" 
-                             BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                             Background="Transparent">
+                             BorderBrush="{ThemeResource PlayerColorBrush}"
+                             Background="Transparent"
+							Margin="1">
                         <TextBlock Style="{StaticResource BasicButtonStyle}">-</TextBlock>
                     </Button>
                     <Button Name="BtnIncreaseEnergy" 
@@ -173,9 +172,10 @@
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch" 
                             Click="BtnIncreaseEnergy_Click" 
-                            BorderThickness="1"
-                             BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"   
-                             Background="Transparent">
+                            Style="{StaticResource FlatButtonStyle}"
+                             BorderBrush="{ThemeResource PlayerColorBrush}"   
+                             Background="Transparent"
+							Margin="1">
                         <TextBlock HorizontalAlignment="Center" Style="{StaticResource BasicButtonStyle}">+</TextBlock>
                     </Button>
                     
@@ -184,9 +184,13 @@
                         Grid.Row="3"
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch"   
-                          BorderThickness="1"
-                         BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                         Background="Transparent" Click="btnSettings_Click" IsHoldingEnabled="True" Holding="btnSettings_Holding">
+                        Style="{StaticResource FlatButtonStyle}"
+                        BorderBrush="{ThemeResource PlayerColorBrush}"
+                         Background="Transparent" 
+						Click="btnSettings_Click" 
+						IsHoldingEnabled="True" 
+						Holding="btnSettings_Holding"
+						Margin="1,2,1,1">
                         <Button.Content>
                             <!--http://modernicons.io/segoe-mdl2/cheatsheet/-->
                             <FontIcon  FontFamily="Segoe MDL2 Assets" Foreground="White" Glyph="&#xE712;"/>                            

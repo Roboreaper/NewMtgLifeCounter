@@ -142,9 +142,69 @@ namespace MtgLifeCounter
         {
             if (e.PropertyName == nameof(PlayerViewModel.GameType))
                 this.Reset(viewModel.GameType);
-        }       
+			if (e.PropertyName == nameof(PlayerViewModel.Color))
+				ChangePlayerColor();
+        }
 
-        private async void CmdLife_LifeChanged(object sender, LifeChangedEventArgs e)
+		private void ChangePlayerColor()
+		{
+			object objectStyle = null;
+			SolidColorBrush pc = null;
+			if (this.Resources.TryGetValue("PlayerColorBrush", out objectStyle))
+			{
+				pc = objectStyle as SolidColorBrush;
+			}
+
+			if (pc == null)
+				return;
+
+			switch (this.viewModel.Color)
+			{
+				case BackGroundColors.Red:
+					pc.Color = Colors.Red;
+
+					//BackGroundGradientStart.Color = Colors.Red;
+					//BackGroundGradientEnd.Color = Colors.Maroon;
+					break;
+				case BackGroundColors.Blue:
+					pc.Color = Colors.Blue;
+
+					//BackGroundGradientStart.Color = Colors.Blue;
+					//BackGroundGradientEnd.Color = Colors.DarkBlue;
+					break;
+				case BackGroundColors.Green:
+					pc.Color = Colors.ForestGreen;
+
+					//BackGroundGradientStart.Color = Colors.ForestGreen;
+					//BackGroundGradientEnd.Color = Colors.DarkGreen;
+					break;
+				case BackGroundColors.Purple:
+					pc.Color = Colors.MediumPurple;
+
+					//BackGroundGradientStart.Color = Colors.MediumPurple;
+					//BackGroundGradientEnd.Color = Colors.Purple;
+					break;
+				case BackGroundColors.Yellow:
+					pc.Color = Colors.Goldenrod;
+
+					//BackGroundGradientStart.Color = Colors.Goldenrod;
+					//BackGroundGradientEnd.Color = Colors.DarkGoldenrod;
+					break;
+				case BackGroundColors.White:
+					pc.Color = Colors.White;
+					break;
+				case BackGroundColors.Pink:
+					pc.Color = Colors.Pink;
+					break;
+				case BackGroundColors.Cyan:
+					pc.Color = Colors.Cyan;
+					break;
+				default:
+					break;
+			}
+		}
+
+		private async void CmdLife_LifeChanged(object sender, LifeChangedEventArgs e)
         {
             if(!Dispatcher.HasThreadAccess)
             {

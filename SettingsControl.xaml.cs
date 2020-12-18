@@ -75,9 +75,10 @@ namespace MtgLifeCounter
                 default:
                     break;
             }
-        }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+		}
+
+		private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             onClose();
         }
@@ -86,65 +87,82 @@ namespace MtgLifeCounter
         {
             playerControl.SetBackGround(BackGroundColors.Red);
             Update();
-        }
+			onClose();
 
-        private void btnGreen_Click(object sender, RoutedEventArgs e)
+		}
+
+		private void btnGreen_Click(object sender, RoutedEventArgs e)
         {
             playerControl.SetBackGround(BackGroundColors.Green);
             Update();
+			onClose();
 
-        }
+		}
 
-        private void btnYellow_Click(object sender, RoutedEventArgs e)
+		private void btnYellow_Click(object sender, RoutedEventArgs e)
         {
             playerControl.SetBackGround(BackGroundColors.Yellow);
             Update();
+			onClose();
 
-        }
+		}
 
-        private void BtnBlue_Click(object sender, RoutedEventArgs e)
+		private void BtnBlue_Click(object sender, RoutedEventArgs e)
         {
             playerControl.SetBackGround(BackGroundColors.Blue);
             Update();
-        }
+			onClose();
 
-        private void btnPurple_Click(object sender, RoutedEventArgs e)
+		}
+
+		private void btnPurple_Click(object sender, RoutedEventArgs e)
         {
             playerControl.SetBackGround(BackGroundColors.Purple);
 
             Update();
-        }
+			onClose();
 
-        private void btnWhite_Click(object sender, RoutedEventArgs e)
+		}
+
+		private void btnWhite_Click(object sender, RoutedEventArgs e)
         {
             playerControl.SetBackGround(BackGroundColors.White);
             Update();
-        }
+			onClose();
+
+		}
 
 
-        private void btnOrange_Checked(object sender, RoutedEventArgs e)
+		private void btnOrange_Checked(object sender, RoutedEventArgs e)
         {
             playerControl.SetBackGround(BackGroundColors.Pink);
             Update();
+			onClose();
 
-        }
+		}
 
-        private void btnCyan_Checked(object sender, RoutedEventArgs e)
+		private void btnCyan_Checked(object sender, RoutedEventArgs e)
         {
             playerControl.SetBackGround(BackGroundColors.Cyan);
             Update();
-        }
-        private void btnSet20_Click(object sender, RoutedEventArgs e)
+			onClose();
+
+		}
+		private void btnSet20_Click(object sender, RoutedEventArgs e)
         {
             viewModel.LifeTotal = 20;
-        }
+			onClose();
 
-        private void btnSet40_Click(object sender, RoutedEventArgs e)
+		}
+
+		private void btnSet40_Click(object sender, RoutedEventArgs e)
         {
             viewModel.LifeTotal = 40;
-        }
+			onClose();
 
-        private void btnRotate_Click(object sender, RoutedEventArgs e)
+		}
+
+		private void btnRotate_Click(object sender, RoutedEventArgs e)
         {
             playerControl.Flip();
         }
@@ -152,9 +170,11 @@ namespace MtgLifeCounter
         private void btnSet30_Click(object sender, RoutedEventArgs e)
         {
             viewModel.LifeTotal = 30;
-        }
+			onClose();
 
-        private void btnReset_Click(object sender, RoutedEventArgs e)
+		}
+
+		private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             viewModel.GameType = Gametypes.Current;
             Update();
