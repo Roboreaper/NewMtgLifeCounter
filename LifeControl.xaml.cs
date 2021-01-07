@@ -59,7 +59,7 @@ namespace MtgLifeCounter
         }
 
        
-        public  void SetLife(int life)
+        public void SetLife(int life)
         {
             if (!CanGoNegative && life < 0)
                 life = 0;
@@ -144,7 +144,7 @@ namespace MtgLifeCounter
                     if (!CanGoNegative && (LifeTotal + i < 0))
                         return;
 
-                     LifeTotal += i;
+                    LifeTotal += i;
 
                     LifeChangedAmmount += i;
                     if (LifeChangedAmmountTimer == null)
@@ -159,7 +159,7 @@ namespace MtgLifeCounter
 
                     UpdateLifeTextBox(LifeTotal.ToString());
                     LifeChanged?.Invoke(this, new LifeChangedEventArgs(i));
-                    LifeChangeHistory.Invoke(this, new LifeChangedEventArgs(LifeChangedAmmount));
+                    LifeChangeHistory?.Invoke(this, new LifeChangedEventArgs(LifeChangedAmmount));
                 }
             });
         }
@@ -167,7 +167,7 @@ namespace MtgLifeCounter
         private void LifeChangedAmmountTimerCallback(object state)
         {
             LifeChangedAmmount = 0;
-            LifeChangeHistory.Invoke(this, new LifeChangedEventArgs(int.MinValue));
+            LifeChangeHistory?.Invoke(this, new LifeChangedEventArgs(int.MinValue));
             LifeChangedAmmountTimer.Change(-1, -1);
         }
 
@@ -213,7 +213,11 @@ namespace MtgLifeCounter
 
         public void UpdateLifeTotal()
         {
-			TextblockLife.Text = LifeTotal.ToString();
+			string life = LifeTotal.ToString();
+			if (life.Length < 2)
+				life = "  " + life;
+
+			TextblockLife.Text = life;
 			//string leftTxt, rightTxt;
 			//LifeTotalToText(out leftTxt, out rightTxt);
 
@@ -223,6 +227,8 @@ namespace MtgLifeCounter
 
         private async void UpdateLifeTextBox(string life)
         {
+			if (life.Length < 2)
+				life = "  " + life;
 			if (!TextblockLife.Dispatcher.HasThreadAccess)
 			{
 				await TextblockLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { TextblockLife.Text = life; });

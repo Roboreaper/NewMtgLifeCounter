@@ -27,7 +27,7 @@ namespace MtgLifeCounter
 
         private Dictionary<PlayerID, int> CommanderButtonMapping = new Dictionary<PlayerID, int>();
 
-        private int Rotation { get; set; } = 0;
+        private int ControlRotation { get; set; } = 0;
 
         public PlayerControl()
         {
@@ -36,18 +36,10 @@ namespace MtgLifeCounter
 
         public void Init(IGameManager manager, PlayerViewModel model)
         {
-            if (manager == null)
-            {
-                throw new ArgumentNullException("manager is null");
-            }
-            if (model == null)
-            {
-                throw new ArgumentNullException("Player model is null");
-            }
-
-            this._manager = manager;
+			this._manager = manager ?? throw new ArgumentNullException("manager is null");
             this._manager.PlayerColorChanged += _manager_PlayerColorChanged;
-            this.viewModel = model;
+
+            this.viewModel = model ?? throw new ArgumentNullException("Player model is null");
             this.viewModel.PropertyChanged += ViewModel_PropertyChanged;
 
             LifeControl.Init(viewModel,true);
@@ -61,9 +53,9 @@ namespace MtgLifeCounter
             ToprtAngle.Angle = 0;
             //rtPanelOptions.Angle = 0;
 
-            cmdLife1.Visibility = Visibility.Collapsed;
-            cmdLife2.Visibility = Visibility.Collapsed;
-            cmdLife3.Visibility = Visibility.Collapsed;
+			borderLife1.Visibility = cmdLife1.Visibility = Visibility.Collapsed;
+			borderLife2.Visibility = cmdLife2.Visibility = Visibility.Collapsed;
+			borderLife3.Visibility = cmdLife3.Visibility = Visibility.Collapsed;
 
             SettingsControl.Init(this.viewModel, this, OnCloseSettings);
 
@@ -143,14 +135,14 @@ namespace MtgLifeCounter
             if (e.PropertyName == nameof(PlayerViewModel.GameType))
                 this.Reset(viewModel.GameType);
 			if (e.PropertyName == nameof(PlayerViewModel.Color))
-				ChangePlayerColor();
+				ChangePlayerColor(this.viewModel.Color);
         }
 
-		private void ChangePlayerColor()
+		private void ChangePlayerColor(BackGroundColors color, string key = "PlayerColorBrush")
 		{
 			object objectStyle = null;
 			SolidColorBrush pc = null;
-			if (this.Resources.TryGetValue("PlayerColorBrush", out objectStyle))
+			if (this.Resources.TryGetValue(key, out objectStyle))
 			{
 				pc = objectStyle as SolidColorBrush;
 			}
@@ -158,7 +150,7 @@ namespace MtgLifeCounter
 			if (pc == null)
 				return;
 
-			switch (this.viewModel.Color)
+			switch (color)
 			{
 				case BackGroundColors.Red:
 					pc.Color = Colors.Red;
@@ -201,6 +193,12 @@ namespace MtgLifeCounter
 					break;
 				default:
 					break;
+			}
+			if (key == "PlayerColorBrush")
+			{
+				ChangePlayerColor(color, "Player1ColorBrush");
+				ChangePlayerColor(color, "Player2ColorBrush");
+				ChangePlayerColor(color, "Player3ColorBrush");
 			}
 		}
 
@@ -276,15 +274,15 @@ namespace MtgLifeCounter
                 switch (cmd)
                 {
                     case 1:
-                        cmdLife1.Visibility = Visibility.Visible;
+                        borderLife1.Visibility = cmdLife1.Visibility = Visibility.Visible;
                         break;
 
                     case 2:
-                        cmdLife2.Visibility = Visibility.Visible;
+						borderLife2.Visibility = cmdLife2.Visibility = Visibility.Visible;
                         break;
 
                     case 3:
-                        cmdLife3.Visibility = Visibility.Visible;
+						borderLife3.Visibility = cmdLife3.Visibility = Visibility.Visible;
                         break;
 
                     default:
@@ -432,9 +430,9 @@ namespace MtgLifeCounter
 
         private void ApplyRotation(int degrees = 180)
         {
-            Rotation = (Rotation + degrees) % 360;
+            ControlRotation = (ControlRotation + degrees) % 360;
             //rtAngle.Angle = Rotation;
-            ToprtAngle.Angle = Rotation;
+            ToprtAngle.Angle = ControlRotation;
             //rtPanelOptions.Angle = Rotation;
 
             //playerOption.Hide();
@@ -495,17 +493,20 @@ namespace MtgLifeCounter
             switch (btn)
             {
                 case 1:
-                    //btnCmdE1.Background = new SolidColorBrush(clr);
-                    cmdLife1.SetColor(color);
+					//btnCmdE1.Background = new SolidColorBrush(clr);
+					//ChangePlayerColor(this.viewModel.Color, "Player1ColorBrush");
+					cmdLife1.SetColor(color);
                     break;
                 case 2:
-                    //btnCmdE2.Background = new SolidColorBrush(clr);
-                    cmdLife2.SetColor(color);
+					//btnCmdE2.Background = new SolidColorBrush(clr);
+					//ChangePlayerColor(this.viewModel.Color, "Player2ColorBrush");
+					cmdLife2.SetColor(color);
 
                     break;
                 case 3:
-                    //btnCmdE3.Background = new SolidColorBrush(clr);
-                    cmdLife3.SetColor(color);
+					//btnCmdE3.Background = new SolidColorBrush(clr);
+					//ChangePlayerColor(this.viewModel.Color, "Player3ColorBrush");
+					cmdLife3.SetColor(color);
 
                     break;
                 default:

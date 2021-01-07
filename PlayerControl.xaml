@@ -11,7 +11,10 @@
 
     <UserControl.Resources>
         <SolidColorBrush x:Key="PlayerColorBrush" Color="red" />
-        <SolidColorBrush x:Key="BasicColorBrush" Color="White" />
+		<SolidColorBrush x:Key="Player1ColorBrush" Color="red" />
+		<SolidColorBrush x:Key="Player2ColorBrush" Color="red" />
+		<SolidColorBrush x:Key="Player3ColorBrush" Color="red" />
+		<SolidColorBrush x:Key="BasicColorBrush" Color="White" />
         
         <Style x:Key="LifeStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="{StaticResource PlayerColorBrush}" />
@@ -110,15 +113,15 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-						<Border Grid.Row="0" Grid.Column="0" BorderThickness="2" BorderBrush="{ThemeResource PlayerColorBrush}" Margin="2,0,2,3" CornerRadius="4">
+						<Border x:Name="borderLife1" Grid.Row="0" Grid.Column="0" BorderThickness="2" BorderBrush="{ThemeResource Player1ColorBrush}" Margin="2,0,2,3" CornerRadius="4">
 							<local:LifeControl x:Name="cmdLife1" />
 						</Border>
 
-						<Border Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="{ThemeResource PlayerColorBrush}" Margin="2,0,2,3" CornerRadius="4">
+						<Border x:Name="borderLife2" Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="{ThemeResource Player2ColorBrush}" Margin="2,0,2,3" CornerRadius="4">
 							<local:LifeControl x:Name="cmdLife2"  />
 						</Border>
 
-						<Border  Grid.Row="0" Grid.Column="2" BorderThickness="2" BorderBrush="{ThemeResource PlayerColorBrush}" Margin="2,0,0,3" CornerRadius="4">
+						<Border x:Name="borderLife3" Grid.Row="0" Grid.Column="2" BorderThickness="2" BorderBrush="{ThemeResource Player3ColorBrush}" Margin="2,0,0,3" CornerRadius="4">
 							<local:LifeControl x:Name="cmdLife3" />
 						</Border>
                    
