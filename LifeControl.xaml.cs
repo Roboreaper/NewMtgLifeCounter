@@ -154,10 +154,10 @@ namespace MtgLifeCounter
                     else
                         LifeChangedAmmountTimer.Change(1000, -1);
 
-                    string leftTxt, rightTxt;
-                    LifeTotalToText(out leftTxt, out rightTxt);
+                    //string leftTxt, rightTxt;
+                    //LifeTotalToText(out leftTxt, out rightTxt);
 
-                    UpdateLifeTextBox(leftTxt, rightTxt);
+                    UpdateLifeTextBox(LifeTotal.ToString());
                     LifeChanged?.Invoke(this, new LifeChangedEventArgs(i));
                     LifeChangeHistory.Invoke(this, new LifeChangedEventArgs(LifeChangedAmmount));
                 }
@@ -171,70 +171,74 @@ namespace MtgLifeCounter
             LifeChangedAmmountTimer.Change(-1, -1);
         }
 
-        private void LifeTotalToText(out string leftTxt, out string rightTxt)
-        {
-            string lifeTotalString = LifeTotal.ToString();
-            leftTxt = "";
-            rightTxt = "";
-            if (LifeTotal < 0)
-            {
-                leftTxt = "-";
+        //private void LifeTotalToText(out string leftTxt, out string rightTxt)
+        //{
+        //    string lifeTotalString = LifeTotal.ToString();
+        //    leftTxt = "";
+        //    rightTxt = "";
+        //    if (LifeTotal < 0)
+        //    {
+        //        leftTxt = "-";
 
-                if (lifeTotalString.Length > 2)
-                {
-                    leftTxt += lifeTotalString[1];
-                    rightTxt = lifeTotalString.Substring(2);
-                }
-                else
-                {
-                    rightTxt = lifeTotalString.Substring(1);
-                }
+        //        if (lifeTotalString.Length > 2)
+        //        {
+        //            leftTxt += lifeTotalString[1];
+        //            rightTxt = lifeTotalString.Substring(2);
+        //        }
+        //        else
+        //        {
+        //            rightTxt = lifeTotalString.Substring(1);
+        //        }
 
-            }
-            //else if(LifeTotal ==0)
-            //{
-            //    leftTxt = "";
-            //    rightTxt = "0";
-            //}
-            else
-            {
-                if (LifeTotal <= 9)
-                {
-                    leftTxt = "0";
-                    rightTxt = lifeTotalString;
-                }
-                else
-                {
-                    leftTxt += lifeTotalString[0];
-                    rightTxt = lifeTotalString.Substring(1);
-                }
-            }
-        }
+        //    }
+        //    //else if(LifeTotal ==0)
+        //    //{
+        //    //    leftTxt = "";
+        //    //    rightTxt = "0";
+        //    //}
+        //    else
+        //    {
+        //        if (LifeTotal <= 9)
+        //        {
+        //            leftTxt = "0";
+        //            rightTxt = lifeTotalString;
+        //        }
+        //        else
+        //        {
+        //            leftTxt += lifeTotalString[0];
+        //            rightTxt = lifeTotalString.Substring(1);
+        //        }
+        //    }
+        //}
 
         public void UpdateLifeTotal()
-        {         
-            string leftTxt, rightTxt;
-            LifeTotalToText(out leftTxt, out rightTxt);
-
-            BtnDecreaseLife.Content = leftTxt;
-            BtnIncreaseLife.Content = rightTxt;
-        }
-
-        private async void UpdateLifeTextBox(string leftTxt, string rightTxt)
         {
+			TextblockLife.Text = LifeTotal.ToString();
+			//string leftTxt, rightTxt;
+			//LifeTotalToText(out leftTxt, out rightTxt);
 
-            if (!BtnDecreaseLife.Dispatcher.HasThreadAccess)
-            {
-                await BtnDecreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { BtnDecreaseLife.Content = leftTxt; });
-            }
+			//BtnDecreaseLife.Content = leftTxt;
+			//BtnIncreaseLife.Content = rightTxt;
+		}
 
-            if (!BtnIncreaseLife.Dispatcher.HasThreadAccess)
-            {
-                await BtnIncreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { BtnIncreaseLife.Content = rightTxt; });
-            }
-        }
+        private async void UpdateLifeTextBox(string life)
+        {
+			if (!TextblockLife.Dispatcher.HasThreadAccess)
+			{
+				await TextblockLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { TextblockLife.Text = life; });
+			}
+			//if (!BtnDecreaseLife.Dispatcher.HasThreadAccess)
+			//{
+			//    await BtnDecreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { BtnDecreaseLife.Content = leftTxt; });
+			//}
 
-        int _incrementDecreaseLife = 0;
+			//if (!BtnIncreaseLife.Dispatcher.HasThreadAccess)
+			//{
+			//    await BtnIncreaseLife.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => { BtnIncreaseLife.Content = rightTxt; });
+			//}
+		}
+
+		int _incrementDecreaseLife = 0;
         private void BtnDecreaseLife_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             _incrementDecreaseLife = 0;
