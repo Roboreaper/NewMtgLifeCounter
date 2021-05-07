@@ -149,7 +149,7 @@ namespace MtgLifeCounter
                     LifeChangedAmmount += i;
                     if (LifeChangedAmmountTimer == null)
                     {
-                        LifeChangedAmmountTimer = new System.Threading.Timer(LifeChangedAmmountTimerCallback, null, 1000, -1);
+                        LifeChangedAmmountTimer = new System.Threading.Timer(LifeChangedAmmountTimerCallback, null, 3000, -1);
                     }
                     else
                         LifeChangedAmmountTimer.Change(1000, -1);

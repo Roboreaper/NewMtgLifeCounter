@@ -103,7 +103,7 @@
 
             </Grid.RenderTransform>          
 
-            <local:LifeControl x:Name="LifeControl"  Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2" BorderThickness="0"/>
+            <local:LifeControl x:Name="LifeControl"  Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2" Grid.ColumnSpan="2" BorderThickness="0"/>
 
 			<Border Name="BorderCmd" Grid.Row="1" Grid.Column="0" BorderBrush="{ThemeResource PlayerColorBrush}" BorderThickness="0" Visibility="Collapsed" Margin="0,0,0,2">
                 <Grid Name="GridCmd" Grid.Row="2" Grid.Column="0">
@@ -132,14 +132,13 @@
 			<Border BorderBrush="{StaticResource PlayerColorBrush}" BorderThickness="0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" CornerRadius="4">
                 <Grid Name="GridOptions" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" CornerRadius="4" Margin="4">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="2*"/>
 
                     </Grid.RowDefinitions>
 
-                    <Button 
+						<Button 
                         Name=" btnCounterType"
                         Grid.Row="0"
                         HorizontalAlignment="Stretch" 
@@ -147,19 +146,21 @@
 						Style="{StaticResource FlatButtonStyle}"
                         Click="btnCounterType_Click"
                         BorderBrush="{ThemeResource PlayerColorBrush}"
-						Margin="1">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Image x:Name="imgCountertype"  Grid.Row="0" Source="../assets/countersymbols/energy.png"></Image>
-                            <TextBlock Name="tbCounterType" Grid.Row="1" Style="{StaticResource BasicButtonStyle}" DoubleTapped="tbEnergy_DoubleTapped">0</TextBlock>
+						Margin="1"
+						Visibility="Collapsed">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition/>
+									<RowDefinition/>
+								</Grid.RowDefinitions>
+								<Image x:Name="imgCountertype"  Grid.Row="0" Source="../assets/countersymbols/hart.png"></Image>
 
-                        </Grid>
+								<TextBlock Name="tbCounterType" Grid.Row="1" Style="{StaticResource BasicButtonStyle}">0</TextBlock>
 
-                    </Button>
-                    <Button Name="BtnDecreaseEnergy" 
+							</Grid>
+						</Button>
+					
+						<!--<Button Name="BtnDecreaseEnergy" 
                             Grid.Row="2"  
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch"  
@@ -169,8 +170,8 @@
                              Background="Transparent"
 							Margin="1">
                         <TextBlock Style="{StaticResource BasicButtonStyle}">-</TextBlock>
-                    </Button>
-                    <Button Name="BtnIncreaseEnergy" 
+                    </Button>-->
+                    <!--<Button Name="BtnIncreaseEnergy" 
                             Grid.Row="1" 
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch" 
@@ -180,7 +181,7 @@
                              Background="Transparent"
 							Margin="1">
                         <TextBlock HorizontalAlignment="Center" Style="{StaticResource BasicButtonStyle}">+</TextBlock>
-                    </Button>
+                    </Button>-->
                     
                     <Button 
                         Name="btnSettings"

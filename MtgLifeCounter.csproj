@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\countersymbols\energy.png" />
+    <Content Include="Assets\countersymbols\hart.png" />
     <Content Include="Assets\countersymbols\poison.png" />
     <Content Include="Assets\countersymbols\XP.png" />
     <Content Include="Assets\Logo\logo_150.png" />

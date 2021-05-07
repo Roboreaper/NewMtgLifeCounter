@@ -110,27 +110,61 @@ namespace MtgLifeCounter
             else
             {
 
-                if (viewModel.CounterType != CustomCounterType.LifeHistory)
+				if (viewModel.CounterType != CustomCounterType.LifeHistory)
                 {
-                    imgCountertype.Source = new BitmapImage();
-                    _lastCounterType = viewModel.CounterType;
+					btnCounterType.Visibility = Visibility.Visible;
+					btnCounterType.Opacity = 1.0;
+					// imgCountertype.Source = new BitmapImage();
+					_lastCounterType = viewModel.CounterType;
                     viewModel.CounterType = CustomCounterType.LifeHistory;
                 }
 
                 if( e.Lifechanged == int.MinValue)
                 {
                     viewModel.CounterType = _lastCounterType;
-                    imgCountertype.Source = new BitmapImage(new Uri("ms-appx:///" + CounterTypeHelper.CounterTypeImage(viewModel.CounterType)));
-                }
+					FadeOut(btnCounterType);
+					//btnCounterType.Visibility = Visibility.Collapsed;
 
-                _LifeHistory = e.Lifechanged;
+					//imgCountertype.Source = new BitmapImage(new Uri("ms-appx:///" + CounterTypeHelper.CounterTypeImage(viewModel.CounterType)));
+				}
+
+				_LifeHistory = e.Lifechanged;
 
                 UpdateCustomType();
             }
            
         }
 
-        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		private void FadeOut(Button btn)
+		{
+			Task.Run(() =>
+			{
+				for (double i = 0.9; i > 0; i = i - 0.1)
+				{
+					if (!Dispatcher.HasThreadAccess)
+					{
+						Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+						{
+							btn.Opacity = i;
+						});
+					}
+					else
+					{
+						btn.Opacity = i;
+					}
+
+					Task.Delay(100).Wait();
+				}
+
+				Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+				{
+					btn.Visibility = Visibility.Collapsed;
+				});
+			});			
+
+		}
+
+		private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PlayerViewModel.GameType))
                 this.Reset(viewModel.GameType);
@@ -395,7 +429,7 @@ namespace MtgLifeCounter
             }
             UpdateCustomType();
 
-            imgCountertype.Source = new BitmapImage(new Uri("ms-appx:///" + CounterTypeHelper.CounterTypeImage(viewModel.CounterType)));
+            //imgCountertype.Source = new BitmapImage(new Uri("ms-appx:///" + CounterTypeHelper.CounterTypeImage(viewModel.CounterType)));
         }      
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
