@@ -27,9 +27,9 @@ namespace MtgLifeCounter
 
         private Dictionary<PlayerID, int> CommanderButtonMapping = new Dictionary<PlayerID, int>();
 
-        private int ControlRotation { get; set; } = 0;
+        private int ControlRotation { get; set; } = 0;		
 
-        public PlayerControl()
+		public PlayerControl()
         {
             this.InitializeComponent();
         }
@@ -100,6 +100,7 @@ namespace MtgLifeCounter
 
         CustomCounterType _lastCounterType = CustomCounterType.Experience;
         int _LifeHistory = 0;
+		System.Threading.CancellationTokenSource _cancelToken = null;
         private async void LifeControl_LifeChanged(object sender, LifeChangedEventArgs e)
         {
 
@@ -112,6 +113,7 @@ namespace MtgLifeCounter
 
 				if (viewModel.CounterType != CustomCounterType.LifeHistory)
                 {
+					_cancelToken?.Cancel();
 					btnCounterType.Visibility = Visibility.Visible;
 					btnCounterType.Opacity = 1.0;
 					// imgCountertype.Source = new BitmapImage();
@@ -121,8 +123,15 @@ namespace MtgLifeCounter
 
                 if( e.Lifechanged == int.MinValue)
                 {
-                    viewModel.CounterType = _lastCounterType;
-					FadeOut(btnCounterType);
+					_cancelToken?.Cancel();
+
+					btnCounterType.Visibility = Visibility.Visible;
+					btnCounterType.Opacity = 1.0;
+
+					viewModel.CounterType = _lastCounterType;
+					_cancelToken = new System.Threading.CancellationTokenSource();
+
+					FadeOut(btnCounterType, _cancelToken.Token);
 					//btnCounterType.Visibility = Visibility.Collapsed;
 
 					//imgCountertype.Source = new BitmapImage(new Uri("ms-appx:///" + CounterTypeHelper.CounterTypeImage(viewModel.CounterType)));
@@ -135,12 +144,16 @@ namespace MtgLifeCounter
            
         }
 
-		private void FadeOut(Button btn)
+
+		private void FadeOut(Button btn, System.Threading.CancellationToken token)
 		{
 			Task.Run(() =>
 			{
 				for (double i = 0.9; i > 0; i = i - 0.1)
 				{
+					if (token.IsCancellationRequested)
+						return;
+
 					if (!Dispatcher.HasThreadAccess)
 					{
 						Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -160,8 +173,7 @@ namespace MtgLifeCounter
 				{
 					btn.Visibility = Visibility.Collapsed;
 				});
-			});			
-
+			},token);
 		}
 
 		private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

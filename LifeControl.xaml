@@ -34,7 +34,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Viewbox Grid.RowSpan="2" Grid.ColumnSpan="3" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0">
+        <Viewbox Grid.RowSpan="2" Grid.ColumnSpan="3" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
 			<TextBlock x:Name="TextblockLife" Foreground="{StaticResource PlayerColorBrush}" Text="20">				
 			</TextBlock>            
         </Viewbox>
